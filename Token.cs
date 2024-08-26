@@ -9,17 +9,16 @@ namespace Semantica
     {
         public enum Tipos
         {
-            Identificador,Numero,Caracter,Asignacion,FinSentencia,FinArchivo,OpLogico,
-            OperadorRelacional,OperadorTermino,IncrementoTermino,
-            OperadorFactor,IncrementoFactor,OpTernario,Cadena,Inicio,Fin,
-            TipoDatos, Reservada
-        }
+            Identificador, Numero, FinSentencia, OpTermino, OpFcator,
+            OpLogico, OpRelacional, OpTernario, Asignacion, IncTermino,
+            IncFactor, Cadena, Inicio, Fin, Caracter, Moneda, Ciclo, Condicion,TipoDato
+            
+        };
         private string contenido;
-        private Tipos  clasificacion;
+        private Tipos clasificacion;
         public Token()
         {
             contenido = "";
-            clasificacion = Tipos.Identificador;
         }
         public void setContenido(string contenido)
         {
