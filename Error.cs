@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace Semantica
 {
+    //Requerimiento: Número de linea donde se encuentra el error
     public class Error : Exception
     {
-        
-        public Error(string message, StreamWriter log) : base("Error "+message){
-            log.WriteLine(message); 
-           // log.WriteLine(message);
+        public Error(string mensaje, StreamWriter log) : base("Error: " + mensaje)
+        {
+            log.WriteLine("Error: " + mensaje);
         }
-        
     }
 }

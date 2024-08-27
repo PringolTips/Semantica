@@ -9,10 +9,10 @@ namespace Semantica
     {
         public enum Tipos
         {
-            Identificador, Numero, FinSentencia, OpTermino, OpFcator,
+            Identificador, Numero, FinSentencia, OpTermino, OpFactor,
             OpLogico, OpRelacional, OpTernario, Asignacion, IncTermino,
-            IncFactor, Cadena, Inicio, Fin, Caracter, Moneda, Ciclo, Condicion,TipoDato
-            
+            IncFactor, Cadena, Inicio, Fin, Caracter, TipoDato, Ciclo, 
+            Condicion
         };
         private string contenido;
         private Tipos clasificacion;

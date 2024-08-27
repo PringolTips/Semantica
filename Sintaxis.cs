@@ -5,16 +5,20 @@ using System.Threading.Tasks;
 
 namespace Semantica
 {
-    public class Sintaxis: Lexico
+    public class Sintaxis : Lexico
     {
-        public Sintaxis(){
+        public Sintaxis()
+        {
             nextToken();
         }
-        public Sintaxis(string name) : base(name){
+        public Sintaxis(string nombre) : base(nombre)
+        {
             nextToken();
         }
-        public void match(String espera){
-            if(getContenido() == espera){
+        public void match(string espera)
+        {
+            if (getContenido() == espera)
+            {
                 nextToken();
             }
             else
@@ -22,14 +26,15 @@ namespace Semantica
                 throw new Error("Sintaxis: se espera un "+espera,log);
             }
         }
-
-        public void match(Token.Tipos espera){
-            if(getClasificacion() == espera){ 
+        public void match(Tipos espera)
+        {
+            if (getClasificacion() == espera)
+            {
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un "+ espera , log);
+                throw new Error("Sintaxis: se espera un "+espera,log);
             }
         }
     }
