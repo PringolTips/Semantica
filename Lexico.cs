@@ -16,43 +16,46 @@ namespace Semantica
         const int E = -2;
         int[,] TRAND =
         {
-            {0, 1, 2,26 ,1, 9,10, 8,18,12,27,12,14,15,19,17,17,21,22,24,25,26,26, 0,31},
-            {F, 1, 1, F, 1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, 2, 3, 5, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {E, E, 4, E, 5, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, F},
-            {F, F, 4, F, 5, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {E, E, 7, E, E, 6, 6, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, F},
-            {E, E, 7, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, F},
-            {F, F, 7, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, 11, F, F, 11, F, F, F, F, F, F, F, F, F, F, F, F,F,F, F, F},
-            {F, F, F, F, F, F, 11, F, 11, F, F, F, F, F, F, F, F, F, F, F, F,F,F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, 13, F, F, F, F, F, F, F, F, F, F, F, F, F,F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, 16, F, F, F, F, F, F, F, F, F,F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, 16, F, F, F, F, F, F, F, F,F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, 20, F, F, F, F, F, F, F, F, F, F, F, F, F,F, F, F},
-            {F, F, F, F, F, F, F, F, 20, F, F, F, F, F, F, F, F, F, F, F, F, F,F, F, F},
-            {F, F, F, F, F, F, F, F, 20, F, F, F, F, F, F, F, F, F, F, F, F, F,F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,23,22,22,E,22, 22,F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {F, F, F, F, F, F, F, F,13,29,28, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
-            {28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,0,28, 0, F},
-            {29,29,29,29,29,29,29,29,29,30,29,29,29,29,29,29,29,29,29,29,29,E,29, 29,F},
-            {29,29,29,29,29,29,29,29,29,30, 0,29,29,29,29,29,29,29,29,29,29,E,29, 29,F},
-            {E, E, 32, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E,E},
-            {F,F, 32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F}
+             //WS, L, D, ., E, +, -, ;, =, *, /, %, &, |, !, <, >, ?, ", {, },EOF,Ld,\n, $
+        /* 0*/{ 0, 1, 2,26, 1, 9,10, 8,18,12,27,12,14,15,19,17,17,21,22,24,25,26,26, 0,31},
+        /* 1*/{ F, 1, 1, F, 1, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /* 2*/{ F, F, 2, 3, 5, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /* 3*/{ E, E, 4, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, F},
+        /* 4*/{ F, F, 4, F, 5, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /* 5*/{ E, E, 7, E, E, 6, 6, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, F},
+        /* 6*/{ E, E, 7, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, F},
+        /* 7*/{ F, F, 7, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /* 8*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /* 9*/{ F, F, F, F, F,11, F, F,11, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*10*/{ F, F, F, F, F, F,11, F,11, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*11*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*12*/{ F, F, F, F, F, F, F, F,13, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*13*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*14*/{ F, F, F, F, F, F, F, F, F, F, F, F,16, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*15*/{ F, F, F, F, F, F, F, F, F, F, F, F, F,16, F, F, F, F, F, F, F, F, F, F, F},
+        /*16*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*17*/{ F, F, F, F, F, F, F, F,20, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*18*/{ F, F, F, F, F, F, F, F,20, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*19*/{ F, F, F, F, F, F, F, F,20, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*20*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*21*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*22*/{22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,23,22,22, E,22,22, F},
+        /*23*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*24*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*25*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*26*/{ F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*27*/{ F, F, F, F, F, F, F, F,13,29,28, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+        /*28*/{28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28, 0,28, 0, F},
+        /*29*/{29,29,29,29,29,29,29,29,29,30,29,29,29,29,29,29,29,29,29,29,29, E,29,29, F},
+        /*30*/{29,29,29,29,29,29,29,29,29,30, 0,29,29,29,29,29,29,29,29,29,29, E,29,29, F},
+        /*31*/{ E, E,32, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E},
+        /*32*/{ F, F,32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
+             //WS, L, D, ., E, +, -, ;, =, *, /, %, &, |, !, <, >, ?, ", {, },EOF,Ld,\n, $
 
         };
         public Lexico() // Constructor
         {
+            linea = 0;
             log = new StreamWriter("prueba.log");
             log.AutoFlush = true;
             asm = new StreamWriter("prueba.asm");
@@ -71,6 +74,7 @@ namespace Semantica
         }
         public Lexico(string nombre) // Constructor
         {
+            linea = 0;
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
             asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
