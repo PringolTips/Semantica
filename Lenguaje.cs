@@ -52,6 +52,89 @@ namespace Semantica
             }
         }
 
+        private void Variables()
+        {
+            
+        }
+        //ListaIdentificadores -> identificador (,ListaIdentificadores)?
+        private void ListaIdentificadores()
+        {
+            
+        }
+        //BloqueInstrucciones -> { listaIntrucciones? }
+        private void BloqueInstrucciones()
+        {
+
+        }
+        //ListaInstrucciones -> Instruccion ListaInstrucciones?
+        private void ListaInstrucciones()
+        {
+            
+        }
+        //Instruccion -> Console | If | While | do | For | Asignacion
+        private void Instruccion()
+        {
+            
+        }
+        //Asignacion -> Identificador = Expresion;
+        private void Asignacion()
+        {
+            
+        }
+        //If -> if (Condicion) bloqueInstrucciones | instruccion
+        //     (else bloqueInstrucciones | instruccion)?
+        //Condicion -> Expresion operadorRelacional Expresion
+        private void Condicion()
+        {
+
+        }
+//While -> while(Condicion) bloqueInstrucciones | instruccion
+//Do -> do 
+//        bloqueInstrucciones | intruccion 
+//      while(Condicion);
+//For -> for(Asignacion Condicion; Incremento) 
+//       BloqueInstrucciones | Intruccion 
+    
+    
+        //Incremento -> Identificador ++ | --
+        private void Incremento()
+        {
+            
+        }
+        //Console -> Console.(WriteLine|Write) (cadena); |
+        //           Console.(Read | ReadLine) ();
+//
+        //Main      -> static void Main(string[] args) BloqueInstrucciones 
+        private void Main()
+        {
+            
+        }   
+        //Expresion -> Termino MasTermino
+        private void Expresion()
+        {
+
+        }
+        //MasTermino -> (OperadorTermino Termino)?
+        private void MasTermino()
+        {
+            
+        }
+        //Termino -> Factor PorFactor
+        private void Termino()
+        {
+            
+        }
+        //PorFactor -> (OperadorFactor Factor)?
+        private void PorFactor()
+        {
+            
+        }
+        //Factor -> numero | identificador | (Expresion)
+        private void Factor()
+        {
+            
+        }
+
     }
 
 
