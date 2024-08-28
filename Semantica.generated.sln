@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Semantica", "Semantica.csproj", "{71FDFA91-433C-4081-BD34-4D428D5437F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Semantica", "Semantica.csproj", "{9633BC48-FAEF-49C1-9B4D-5A18C34EA9A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{71FDFA91-433C-4081-BD34-4D428D5437F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71FDFA91-433C-4081-BD34-4D428D5437F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71FDFA91-433C-4081-BD34-4D428D5437F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71FDFA91-433C-4081-BD34-4D428D5437F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9633BC48-FAEF-49C1-9B4D-5A18C34EA9A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9633BC48-FAEF-49C1-9B4D-5A18C34EA9A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9633BC48-FAEF-49C1-9B4D-5A18C34EA9A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9633BC48-FAEF-49C1-9B4D-5A18C34EA9A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

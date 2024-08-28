@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 /*
@@ -24,8 +25,14 @@ namespace Semantica
         //Programa  -> Librerias? Variables? Main
         public void Program()
         {
-            Librerias();
-            Variables();
+            if (getContenido() == "using")
+            {
+                Librerias();
+            }
+            if (getClasificacion() == Tipos.TipoDato)
+            {
+                Variables();
+            }
             Main();
         }
         //Librerias -> using ListaLibrerias; Librerias?
@@ -34,11 +41,11 @@ namespace Semantica
             match("using");
             ListaLibrerias();
             match(Token.Tipos.FinSentencia);
-            if (getContenido()  == "using" )
+            if (getContenido() == "using")
             {
                 Librerias();
             }
-            
+
 
         }
         //ListaLibrerias -> identificador (.ListaLibrerias)?
@@ -55,24 +62,34 @@ namespace Semantica
 
         private void Variables()
         {
-            
+            match(Tipos.TipoDato);
+            ListaIdentificadores();
+            match(Tipos.FinSentencia);
+            if (getClasificacion() == Tipos.TipoDato)
+            {
+                Variables();
+            }
+
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores()
         {
             match(Tipos.Identificador);
-            if(getContenido() == ",")
+            if (getContenido() == ",")
             {
                 match(",");
                 ListaIdentificadores();
             }
-            
+
         }
         //BloqueInstrucciones -> { listaIntrucciones? }
         private void BloqueInstrucciones()
         {
             match("{");
-            ListaInstrucciones();
+            if (getContenido() != "}")
+            {
+                ListaInstrucciones();
+            }
             match("}");
 
         }
@@ -80,13 +97,40 @@ namespace Semantica
         private void ListaInstrucciones()
         {
             Instruccion();
-            
+            if (getContenido() != "}")
+            {
+                ListaInstrucciones();
+            }
+
         }
         //Instruccion -> Console | If | While | do | For | Asignacion
         private void Instruccion()
         {
-           
-            
+            if (getContenido() == "Console")
+            {
+                console();
+            }
+            else if (getContenido() == "if")
+            {
+                If();
+            }
+            else if (getContenido() == "while")
+            {
+                While();
+            }
+            else if (getContenido() == "do")
+            {
+                Do();
+            }
+            else if (getContenido() == "for")
+            {
+                For();
+            }
+            else
+            {
+                Asignacion();
+            }
+
         }
         //Asignacion -> Identificador = Expresion;
         private void Asignacion()
@@ -94,26 +138,46 @@ namespace Semantica
             match(Tipos.Asignacion);
             match("=");
             Expresion();
+            match(Tipos.FinSentencia);
         }
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?
-        //Condicion -> Expresion operadorRelacional Expresion
+
         private void If()
-        {   
+        {
             match("if");
             match("(");
             Condicion();
             match(")");
-            if(getContenido() == "{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
             else
+            {
                 Instruccion();
-            
-        }	
+            }
+            if (getContenido() == "else")
+            {
+                match("else");
+                if (getContenido() == "{")
+                {
+                    BloqueInstrucciones();
+                }
+                else
+                {
+                    Instruccion();
+                }
+            }
+
+
+        }
+        //Condicion -> Expresion operadorRelacional Expresion
         private void Condicion()
         {
+            Expresion();
+            match(Tipos.OpRelacional);
+            Expresion();
 
         }
         //While -> while(Condicion) bloqueInstrucciones | instruccion
@@ -123,7 +187,7 @@ namespace Semantica
             match("(");
             Condicion();
             match(")");
-            if(getContenido() == "{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
@@ -138,7 +202,7 @@ namespace Semantica
         private void Do()
         {
             match("do");
-            if(getContenido() == "{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
@@ -160,67 +224,118 @@ namespace Semantica
             match(";");
             Incremento();
             match(")");
-            if(getContenido() == "{")
+            if (getContenido() == "{")
             {
                 BloqueInstrucciones();
             }
             else
                 Instruccion();
-            
-        } 
-    
-    
+
+        }
+
+
         //Incremento -> Identificador ++ | --
         private void Incremento()
         {
             match(Tipos.Identificador);
-            if(getContenido() == "++")
+            if (getContenido() == "++")
             {
                 match(Tipos.IncTermino);
             }
-            else if(getContenido() == "--")
+            else if (getContenido() == "--")
             {
                 match(Tipos.IncTermino);
             }
-            
+
         }
         //Console -> Console.(WriteLine|Write) (cadena); |
         //           Console.(Read | ReadLine) ();
-        private void Console()
+        private void console()
         {
-            
-            
+            match("Console");
+            match(".");
+            if(getContenido() == "Write" || getContenido () == "WriteLine")
+            {
+                match(getContenido());
+                match("(");
+                if(getClasificacion() == Tipos.Cadena)
+                {
+                    match(Tipos.Cadena);
+                } 
+            }
+            else if(getContenido() == "Read" || getContenido () == "ReadLine")
+            {
+                match(getContenido());
+                match("(");
+                match(")");
+            }
         }
-//
+        //
         //Main      -> static void Main(string[] args) BloqueInstrucciones 
         private void Main()
         {
-            
-        }   
+            match("static");
+            match("void");
+            match("Main");
+            match("(");
+            match("string");
+            match("[");
+            match("]");
+            match("args");
+            BloqueInstrucciones();
+
+
+        }
         //Expresion -> Termino MasTermino
         private void Expresion()
         {
-
+            Termino();
+            MasTermino();
         }
         //MasTermino -> (OperadorTermino Termino)?
         private void MasTermino()
         {
-            
+            if (getClasificacion() == Tipos.OpTermino)
+            {
+                match(Tipos.OpTermino);
+                Termino();
+                MasTermino();
+            }
+
         }
         //Termino -> Factor PorFactor
         private void Termino()
         {
-            
+            Factor();
+            PorFactor();
+
         }
         //PorFactor -> (OperadorFactor Factor)?
         private void PorFactor()
         {
-            
+            if(getClasificacion() == Tipos.OpFactor)
+            {
+                match(Tipos.OpFactor);
+                Factor();
+                PorFactor();
+            }
+
         }
         //Factor -> numero | identificador | (Expresion)
         private void Factor()
         {
-            
+            if(getClasificacion() == Tipos.Numero) 
+            {
+                match(Tipos.Numero);
+            }
+            else
+            {
+                match(Tipos.Identificador);
+            }
+
+            match("(");
+            Expresion();
+            match(")");
         }
 
     }

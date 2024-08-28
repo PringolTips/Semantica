@@ -11,7 +11,7 @@ namespace Semantica
         private StreamReader archivo;
         public StreamWriter log;
         protected StreamWriter asm;
-        protected int linea;
+        protected int linea = 1;
         const int F = -1;
         const int E = -2;
         int[,] TRAND =
@@ -55,7 +55,6 @@ namespace Semantica
         };
         public Lexico() // Constructor
         {
-            linea = 0;
             log = new StreamWriter("prueba.log");
             log.AutoFlush = true;
             asm = new StreamWriter("prueba.asm");
@@ -74,7 +73,6 @@ namespace Semantica
         }
         public Lexico(string nombre) // Constructor
         {
-            linea = 0;
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
             asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
@@ -109,7 +107,9 @@ namespace Semantica
             }
             else if (c == '\n')
             {
+                linea++;
                 return 23;
+                
             }
             else if (char.IsWhiteSpace(c))
             {
@@ -262,15 +262,15 @@ namespace Semantica
             {
                 if (getClasificacion() == Tipos.Numero)
                 {
-                    throw new Error(" Se espera un digito " + buffer, log);
+                    throw new Error(" Se espera un digito " + buffer + " En la linea: " +  linea, log);
                 }
                 else if (getClasificacion() == Tipos.Cadena)
                 {
-                    throw new Error(" Se espera cierre de cadena " + buffer, log);
+                    throw new Error(" Se espera cierre de cadena " + buffer +  " En la linea: " + linea, log);
                 }
                 else if (getClasificacion() == Tipos.OpFactor)
                 {
-                    throw new Error(" Se espera un cierre de comentario\n " + buffer, log);
+                    throw new Error(" Se espera un cierre de comentario\n " + buffer + " En la linea: " + linea, log);
                 }
             }
             setContenido(buffer);
