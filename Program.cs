@@ -11,19 +11,13 @@ namespace Semantica
         {
             try
             {
-                using (Sintaxis L = new Sintaxis("prueba.cpp"))
+                using (Lenguaje L = new Lenguaje("prueba.cpp"))
                 {
                     /*while(!L.finArchivo())
                     {
                         L.nextToken();
                     }*/
-                    L.match(Token.Tipos.Numero);
-                    L.match(Token.Tipos.OpTermino);
-                    L.match(Token.Tipos.Identificador);
-                    L.match(Token.Tipos.FinSentencia);
-
-
-                    
+                    L.Program();                    
                 }
             }
             catch (Exception e)

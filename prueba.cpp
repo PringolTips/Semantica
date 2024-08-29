@@ -1,18 +1,17 @@
-123+radio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+char radio;
+    float pi, e;
+    int rex;
 static void Main(string[] args)
 {
-    char e;
-    float pi;
-    int rex;
 
     Console.Write("Proyecto 6");
     Console.WriteLine(" - ITQ");
-    e = Console.ReadLine();
+    Console.ReadLine();
     pi = (3 + 5) * 8 - (10 - e) / 2; // 61;
     pi++;                            // 62
     e--;                             // 3

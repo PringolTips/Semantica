@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-
 namespace Semantica
 {
     public class Lexico : Token, IDisposable
     {
         private StreamReader archivo;
         public StreamWriter log;
+
         protected StreamWriter asm;
-        protected int linea = 1;
+
         const int F = -1;
         const int E = -2;
         int[,] TRAND =
@@ -51,7 +51,6 @@ namespace Semantica
         /*31*/{ E, E,32, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E},
         /*32*/{ F, F,32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
              //WS, L, D, ., E, +, -, ;, =, *, /, %, &, |, !, <, >, ?, ", {, },EOF,Ld,\n, $
-
         };
         public Lexico() // Constructor
         {
@@ -64,12 +63,11 @@ namespace Semantica
             asm.WriteLine(";Autor: Vega Angeles Christopher");
             asm.WriteLine(";Fecha:" + DateTime.Now);
             log.WriteLine("Fecha: " + DateTime.Now);
-
-            if (!File.Exists("prueba.cpp"))
+            if (!File.Exists("prueba.cs"))
             {
                 throw new Error("El archivo prueba.cpp no existe", log);
             }
-            archivo = new StreamReader("Prueba.cpp");
+            archivo = new StreamReader("prueba.cpp");
         }
         public Lexico(string nombre) // Constructor
         {
@@ -79,10 +77,9 @@ namespace Semantica
             asm.AutoFlush = true;
             log.WriteLine("Analizador Lexico");
             log.WriteLine("Autor: Vega Angeles Christopher");
+            log.WriteLine("Fecha:" + DateTime.Now);
             asm.WriteLine(";Autor: Vega Angeles Christopher");
             asm.WriteLine(";Fecha:" + DateTime.Now);
-            log.WriteLine("Fecha: " + DateTime.Now);
-
             if (Path.GetExtension(nombre) != ".cpp")
             {
                 throw new Error("El archivo " + nombre + " no tiene extension CPP", log);
@@ -99,6 +96,7 @@ namespace Semantica
             log.Close();
             asm.Close();
         }
+
         int Columna(char c)
         {
             if (finArchivo())
@@ -107,9 +105,7 @@ namespace Semantica
             }
             else if (c == '\n')
             {
-                linea++;
                 return 23;
-                
             }
             else if (char.IsWhiteSpace(c))
             {
@@ -122,7 +118,6 @@ namespace Semantica
             else if (char.IsLetter(c))
             {
                 return 1;
-
             }
             else if (char.IsDigit(c))
             {
@@ -215,36 +210,37 @@ namespace Semantica
                 case 09:
                 case 10: setClasificacion(Tipos.OpTermino); break;
                 case 11: setClasificacion(Tipos.IncTermino); break;
-                case 27:
                 case 12: setClasificacion(Tipos.OpFactor); break;
                 case 13: setClasificacion(Tipos.IncFactor); break;
-                case 14:
+                case 14: setClasificacion(Tipos.Caracter); break;
                 case 15: setClasificacion(Tipos.Caracter); break;
-                case 16: setClasificacion(Tipos.OpLogico); break;
-                case 17: setClasificacion(Tipos.OpRelacional); break;
-                case 18: setClasificacion(Tipos.Asignacion); break;
+                case 16:
                 case 19: setClasificacion(Tipos.OpLogico); break;
+                case 17:
                 case 20: setClasificacion(Tipos.OpRelacional); break;
                 case 21: setClasificacion(Tipos.OpTernario); break;
+                case 18: setClasificacion(Tipos.Asignacion); break;
                 case 22: setClasificacion(Tipos.Cadena); break;
                 case 24: setClasificacion(Tipos.Inicio); break;
                 case 25: setClasificacion(Tipos.Fin); break;
                 case 26: setClasificacion(Tipos.Caracter); break;
+                case 27: setClasificacion(Tipos.OpFactor); break;
+                
 
             }
         }
+
         public void nextToken()
         {
             char c;
             string buffer = "";
             int Estado = 0;
+
             while (Estado >= 0)
             {
                 c = (char)archivo.Peek();
-
                 Estado = TRAND[Estado, Columna(c)];
                 Clasificar(Estado);
-
                 if (Estado >= 0)
                 {
                     if (Estado == 0)
@@ -262,35 +258,40 @@ namespace Semantica
             {
                 if (getClasificacion() == Tipos.Numero)
                 {
-                    throw new Error(" Se espera un digito " + buffer + " En la linea: " +  linea, log);
+                    throw new Error(" lexico: se espera un digito: " + buffer, log);
                 }
                 else if (getClasificacion() == Tipos.Cadena)
                 {
-                    throw new Error(" Se espera cierre de cadena " + buffer +  " En la linea: " + linea, log);
+                    throw new Error(" lexico: se espera cierre de cadena: " + buffer, log);
                 }
                 else if (getClasificacion() == Tipos.OpFactor)
                 {
-                    throw new Error(" Se espera un cierre de comentario\n " + buffer + " En la linea: " + linea, log);
+                    throw new Error(" lexico: se espera cierre de Comentario " + buffer, log);
                 }
             }
-            setContenido(buffer);
+
+
             if (getClasificacion() == Tipos.Identificador)
             {
-                switch (getContenido())
+                if (buffer == "int" || buffer == "char" || buffer == "float" || buffer == "double")
                 {
-                    case "char":
-                    case "int":
-                    case "float": setClasificacion(Tipos.TipoDato); break;
-                    case "if":
-                    case "else":
-                    case "switch": setClasificacion(Tipos.Condicion); break;
-                    case "while":
-                    case "do":
-                    case "for": setClasificacion(Tipos.Ciclo); break;
+                    setClasificacion(Tipos.TipoDato);
                 }
+                else if (buffer == "if" || buffer == "else" || buffer == "switch")
+                {
+                    setClasificacion(Tipos.Condicion);
+                }
+                else if (buffer == "while" || buffer == "for" || buffer == "do")
+                {
+                    setClasificacion(Tipos.Ciclo);
+                }
+
             }
+
+            setContenido(buffer);
             log.WriteLine(getContenido() + " = " + getClasificacion());
         }
+
         public bool finArchivo()
         {
             return archivo.EndOfStream;

@@ -1,8 +1,55 @@
 Analizador Lexico
 Autor: Vega Angeles Christopher
-Fecha: 27/08/2024 09:25:11 a. m.
-123 = Numero
-+ = OpTermino
-radio = Identificador
+Fecha:29/08/2024 09:54:57 a. m.
+using = Identificador
+System = Identificador
 ; = FinSentencia
 using = Identificador
+System = Identificador
+. = Caracter
+Collections = Identificador
+. = Caracter
+Generic = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Linq = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Threading = Identificador
+. = Caracter
+Tasks = Identificador
+; = FinSentencia
+char = TipoDato
+radio = Identificador
+; = FinSentencia
+float = TipoDato
+pi = Identificador
+, = Caracter
+e = Identificador
+; = FinSentencia
+int = TipoDato
+rex = Identificador
+; = FinSentencia
+static = Identificador
+void = Identificador
+Main = Identificador
+( = Caracter
+string = Identificador
+[ = Caracter
+] = Caracter
+args = Identificador
+) = Caracter
+{ = Inicio
+Console = Identificador
+. = Caracter
+Write = Identificador
+( = Caracter
+"Proyecto 6" = Cadena
+) = Caracter
+; = FinSentencia
+Console = Identificador
+Error: Sintaxis: se espera un Asignacion( Console )

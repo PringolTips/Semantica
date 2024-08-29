@@ -60,6 +60,7 @@ namespace Semantica
             }
         }
 
+        //Variables -> tipo_dato Lista_identificadores; Variables?
         private void Variables()
         {
             match(Tipos.TipoDato);
@@ -103,7 +104,7 @@ namespace Semantica
             }
 
         }
-        //Instruccion -> Console | If | While | do | For | Asignacion
+        //Instruccion -> Console | If | While | do | For | Variables | Asignacion
         private void Instruccion()
         {
             if (getContenido() == "Console")
@@ -126,6 +127,10 @@ namespace Semantica
             {
                 For();
             }
+            if(getClasificacion() == Tipos.TipoDato)
+            {
+                Variables();
+            } 
             else
             {
                 Asignacion();
@@ -254,21 +259,21 @@ namespace Semantica
         {
             match("Console");
             match(".");
-            if(getContenido() == "Write" || getContenido () == "WriteLine")
+            if (getContenido() == "Write" || getContenido() == "WriteLine")
             {
                 match(getContenido());
                 match("(");
-                if(getClasificacion() == Tipos.Cadena)
+                if (getClasificacion() == Tipos.Cadena)
                 {
                     match(Tipos.Cadena);
-                } 
+                }
             }
-            else if(getContenido() == "Read" || getContenido () == "ReadLine")
+            else if (getContenido() == "Read" || getContenido() == "ReadLine")
             {
                 match(getContenido());
                 match("(");
-                match(")");
             }
+
         }
         //
         //Main      -> static void Main(string[] args) BloqueInstrucciones 
@@ -282,6 +287,7 @@ namespace Semantica
             match("[");
             match("]");
             match("args");
+            match(")");
             BloqueInstrucciones();
 
 
@@ -299,7 +305,6 @@ namespace Semantica
             {
                 match(Tipos.OpTermino);
                 Termino();
-                MasTermino();
             }
 
         }
@@ -313,32 +318,31 @@ namespace Semantica
         //PorFactor -> (OperadorFactor Factor)?
         private void PorFactor()
         {
-            if(getClasificacion() == Tipos.OpFactor)
+            if (getClasificacion() == Tipos.OpFactor)
             {
                 match(Tipos.OpFactor);
                 Factor();
-                PorFactor();
             }
 
         }
         //Factor -> numero | identificador | (Expresion)
         private void Factor()
         {
-            if(getClasificacion() == Tipos.Numero) 
+            if (getClasificacion() == Tipos.Numero)
             {
                 match(Tipos.Numero);
             }
-            else
+            else if (getClasificacion() == Tipos.Identificador)
             {
                 match(Tipos.Identificador);
             }
-
-            match("(");
-            Expresion();
-            match(")");
+            else
+            {
+                match("(");
+                Expresion();
+                match(")");
+            }
         }
 
     }
-
-
 }
