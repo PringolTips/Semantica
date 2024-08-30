@@ -10,8 +10,7 @@ namespace Semantica
         private StreamReader archivo;
         public StreamWriter log;
 
-        protected StreamWriter asm;
-
+        protected int linea = 1;
         const int F = -1;
         const int E = -2;
         int[,] TRAND =
@@ -56,14 +55,10 @@ namespace Semantica
         {
             log = new StreamWriter("prueba.log");
             log.AutoFlush = true;
-            asm = new StreamWriter("prueba.asm");
-            asm.AutoFlush = true;
             log.WriteLine("Analizador Lexico");
             log.WriteLine("Autor: Vega Angeles Christopher");
-            asm.WriteLine(";Autor: Vega Angeles Christopher");
-            asm.WriteLine(";Fecha:" + DateTime.Now);
             log.WriteLine("Fecha: " + DateTime.Now);
-            if (!File.Exists("prueba.cs"))
+            if (!File.Exists("prueba.cpp"))
             {
                 throw new Error("El archivo prueba.cpp no existe", log);
             }
@@ -73,13 +68,9 @@ namespace Semantica
         {
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
-            asm = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".asm");
-            asm.AutoFlush = true;
             log.WriteLine("Analizador Lexico");
             log.WriteLine("Autor: Vega Angeles Christopher");
             log.WriteLine("Fecha:" + DateTime.Now);
-            asm.WriteLine(";Autor: Vega Angeles Christopher");
-            asm.WriteLine(";Fecha:" + DateTime.Now);
             if (Path.GetExtension(nombre) != ".cpp")
             {
                 throw new Error("El archivo " + nombre + " no tiene extension CPP", log);
@@ -94,7 +85,6 @@ namespace Semantica
         {
             archivo.Close();
             log.Close();
-            asm.Close();
         }
 
         int Columna(char c)
@@ -105,6 +95,7 @@ namespace Semantica
             }
             else if (c == '\n')
             {
+                linea++;
                 return 23;
             }
             else if (char.IsWhiteSpace(c))
@@ -200,7 +191,7 @@ namespace Semantica
                 return 22;
             }
         }
-        private void Clasificar(int Estado)
+         private void Clasificar(int Estado)
         {
             switch (Estado)
             {
@@ -225,10 +216,10 @@ namespace Semantica
                 case 25: setClasificacion(Tipos.Fin); break;
                 case 26: setClasificacion(Tipos.Caracter); break;
                 case 27: setClasificacion(Tipos.OpFactor); break;
-                
 
             }
         }
+
 
         public void nextToken()
         {
@@ -258,15 +249,15 @@ namespace Semantica
             {
                 if (getClasificacion() == Tipos.Numero)
                 {
-                    throw new Error(" lexico: se espera un digito: " + buffer, log);
+                    throw new Error(" lexico: se espera un digito en la linea: "+ linea +"   "+ buffer, log);
                 }
                 else if (getClasificacion() == Tipos.Cadena)
                 {
-                    throw new Error(" lexico: se espera cierre de cadena: " + buffer, log);
+                    throw new Error(" lexico: se espera cierre de cadena en la linea:"+ linea +"   "+ buffer, log);
                 }
                 else if (getClasificacion() == Tipos.OpFactor)
                 {
-                    throw new Error(" lexico: se espera cierre de Comentario " + buffer, log);
+                    throw new Error(" lexico: se espera cierre de Comentario en la linea: "+ linea + "   " + buffer, log);
                 }
             }
 

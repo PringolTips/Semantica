@@ -14,13 +14,14 @@ namespace Semantica
 {
     public class Lenguaje : Sintaxis
     {
+        List <Variable> listaVariables;
         public Lenguaje()
         {
-
+            listaVariables = new List<Variable>();
         }
         public Lenguaje(String nombre) : base(nombre)
         {
-
+            listaVariables = new List<Variable>();
         }
         //Programa  -> Librerias? Variables? Main
         public void Program()
@@ -63,9 +64,15 @@ namespace Semantica
         //Variables -> tipo_dato Lista_identificadores; Variables?
         private void Variables()
         {
+            Variable.TipoD Tipo = Variable.TipoD.Char;
+            switch (getContenido())
+            {
+                case "int": Tipo = Variable.TipoD.Int; break;
+                case "Float": Tipo = Variable.TipoD.Float; break;
+            }
             match(Tipos.TipoDato);
-            ListaIdentificadores();
-            match(Tipos.FinSentencia);
+            ListaIdentificadores(Tipo);
+            match(";");
             if (getClasificacion() == Tipos.TipoDato)
             {
                 Variables();
@@ -73,13 +80,14 @@ namespace Semantica
 
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
-        private void ListaIdentificadores()
+        private void ListaIdentificadores(Variable.TipoD t)
         {
+            
             match(Tipos.Identificador);
             if (getContenido() == ",")
             {
                 match(",");
-                ListaIdentificadores();
+                ListaIdentificadores(t);
             }
 
         }
@@ -259,21 +267,36 @@ namespace Semantica
         {
             match("Console");
             match(".");
-            if (getContenido() == "Write" || getContenido() == "WriteLine")
+            if (getContenido() == "WriteLine")
             {
-                match(getContenido());
+                match("WriteLine");
                 match("(");
-                if (getClasificacion() == Tipos.Cadena)
-                {
-                    match(Tipos.Cadena);
-                }
+                match(Tipos.Cadena);
+                match(")");
+                match(";");
             }
-            else if (getContenido() == "Read" || getContenido() == "ReadLine")
+            else if (getContenido() == "Write")
             {
-                match(getContenido());
+                match("Write");
                 match("(");
+                match(Tipos.Cadena);
+                match(")");
+                match(";");
             }
-
+            else if (getContenido() == "Read")
+            {
+                match("Read");
+                match("(");
+                match(")");
+                match(";");
+            }
+            else if (getContenido() == "ReadLine")
+            {
+                match("ReadLine");
+                match("(");
+                match(")");
+                match(";");
+            }
         }
         //
         //Main      -> static void Main(string[] args) BloqueInstrucciones 

@@ -13,10 +13,6 @@ namespace Semantica
             {
                 using (Lenguaje L = new Lenguaje("prueba.cpp"))
                 {
-                    /*while(!L.finArchivo())
-                    {
-                        L.nextToken();
-                    }*/
                     L.Program();                    
                 }
             }
