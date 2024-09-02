@@ -14,7 +14,7 @@ namespace Semantica
 {
     public class Lenguaje : Sintaxis
     {
-        List <Variable> listaVariables;
+        List<Variable> listaVariables;
         public Lenguaje()
         {
             listaVariables = new List<Variable>();
@@ -35,6 +35,7 @@ namespace Semantica
                 Variables();
             }
             Main();
+            ImprimeVariables(); 
         }
         //Librerias -> using ListaLibrerias; Librerias?
         private void Librerias()
@@ -60,29 +61,35 @@ namespace Semantica
                 ListaLibrerias();
             }
         }
-
+        Variable.TipoD getTipo(String TipoDato)
+        {
+            Variable.TipoD Tipo = Variable.TipoD.Char;
+            switch (TipoDato)
+            {
+                case "int": Tipo = Variable.TipoD.Int; break;
+                case "float": Tipo = Variable.TipoD.Float; break;
+            }
+            return Tipo;
+        }
         //Variables -> tipo_dato Lista_identificadores; Variables?
         private void Variables()
         {
-            Variable.TipoD Tipo = Variable.TipoD.Char;
-            switch (getContenido())
-            {
-                case "int": Tipo = Variable.TipoD.Int; break;
-                case "Float": Tipo = Variable.TipoD.Float; break;
-            }
+            Variable.TipoD Tipo = getTipo(getContenido());
             match(Tipos.TipoDato);
             ListaIdentificadores(Tipo);
             match(";");
-            if (getClasificacion() == Tipos.TipoDato)
+        }
+        private void ImprimeVariables()
+        {
+            foreach (Variable v in listaVariables)
             {
-                Variables();
+                log.WriteLine(v.getNombre()+ " (" + v.getTipo() +")"+ " = " + v.getValor());
             }
-
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoD t)
         {
-            
+            listaVariables.Add(new Variable(getContenido(), t));
             match(Tipos.Identificador);
             if (getContenido() == ",")
             {
@@ -135,10 +142,10 @@ namespace Semantica
             {
                 For();
             }
-            if(getClasificacion() == Tipos.TipoDato)
+            if (getClasificacion() == Tipos.TipoDato)
             {
                 Variables();
-            } 
+            }
             else
             {
                 Asignacion();
@@ -148,7 +155,7 @@ namespace Semantica
         //Asignacion -> Identificador = Expresion;
         private void Asignacion()
         {
-            match(Tipos.Asignacion);
+            match(Tipos.Identificador);
             match("=");
             Expresion();
             match(Tipos.FinSentencia);
@@ -362,6 +369,12 @@ namespace Semantica
             else
             {
                 match("(");
+                if(getClasificacion() == Tipos.TipoDato)
+                {
+                    match(Tipos.TipoDato);
+                    match(")");
+                    match("("); 
+                }
                 Expresion();
                 match(")");
             }
