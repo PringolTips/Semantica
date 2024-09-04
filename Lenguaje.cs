@@ -27,6 +27,35 @@ namespace Semantica
             listaVariables = new List<Variable>();
             S = new Stack<float>();
         }
+         Variable.TipoD getTipo(String TipoDato)
+        {
+            Variable.TipoD Tipo = Variable.TipoD.Char;
+            switch (TipoDato)
+            {
+                case "int": Tipo = Variable.TipoD.Int; break;
+                case "float": Tipo = Variable.TipoD.Float; break;
+            }
+            return Tipo;
+        }
+        private bool ExisteVariable(string Nombre)
+        {
+            foreach (Variable v in listaVariables)
+            {
+                if (v.nombre == Nombre)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+         private void ImprimeVariables()
+        {
+            foreach (Variable v in listaVariables)
+            {
+                log.WriteLine(v.nombre + " (" + v.tipo + ")" + " = " + v.valor );
+            }
+        }
+        
         //Programa clasif;rerias? Variables? Main
         public void Program()
         {
@@ -65,16 +94,7 @@ namespace Semantica
                 ListaLibrerias();
             }
         }
-        Variable.TipoD getTipo(String TipoDato)
-        {
-            Variable.TipoD Tipo = Variable.TipoD.Char;
-            switch (TipoDato)
-            {
-                case "int": Tipo = Variable.TipoD.Int; break;
-                case "float": Tipo = Variable.TipoD.Float; break;
-            }
-            return Tipo;
-        }
+       
         //Variables -> tipo_dato Lista_identificadores; Variables?
         private void Variables()
         {
@@ -87,13 +107,7 @@ namespace Semantica
                 Variables();
             }
         }
-        private void ImprimeVariables()
-        {
-            foreach (Variable v in listaVariables)
-            {
-                log.WriteLine(v.nombre + " (" + v.tipo + ")" + " = " + v.valor );
-            }
-        }
+       
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoD t)
         {
@@ -168,8 +182,30 @@ namespace Semantica
             match("=");
             Expresion();
             match(";");
+            float tem = Math.Abs(S.Pop());
+            if (ExisteVariable(variable))
+            {
+                
+                if(getTipo(variable) == Variable.TipoD.Char && tem > 255 )
+                {
+                    throw new Exception("Error Semantico: La variable   (" + variable + ") esta fuera de rango");
+                }
+                else if(getTipo(variable) == Variable.TipoD.Int && tem > 65535)
+                {
+                    throw new Exception("Error Semantico: La variable   (" + variable + ") esta fuera de rango");
+                }
+                /*else if(getTipo(variable) == Variable.TipoD.Float )
+                {
+
+                }*/
+            }
+            else
+            {
+                throw new Exception("Error sintaxico: La variable:  " + variable + "no existe");
+            }
+
             ImprimeStack();
-            log.WriteLine(variable + "=" + S.Pop());
+            log.WriteLine(variable + "=" + tem);
         }
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?
@@ -335,7 +371,8 @@ namespace Semantica
 
         }
         //Expresion -> Termino MasTermino
-        private void Expresion()
+        private void 
+        Expresion()
         {
             Termino();
             MasTermino();

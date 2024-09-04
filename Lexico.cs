@@ -236,6 +236,7 @@ namespace Semantica
             {
                 c = (char)archivo.Peek();
                 Estado = TRAND[Estado, Columna(c)];
+                
                 Clasificar(Estado);
                 if (Estado >= 0)
                 {

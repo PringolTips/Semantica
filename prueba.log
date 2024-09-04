@@ -1,6 +1,6 @@
 Analizador Lexico
 Autor: Vega Angeles Christopher
-Fecha:03/09/2024 10:03:56 p. m.
+Fecha:04/09/2024 09:59:21 a. m.
 using = Identificador
 System = Identificador
 ; = FinSentencia
@@ -34,12 +34,6 @@ args = Identificador
 ) = Caracter
 { = Inicio
 char = TipoDato
-a = Identificador
-, = Caracter
-a = Identificador
-, = Caracter
-a = Identificador
-, = Caracter
 a = Identificador
 ; = FinSentencia
 int = TipoDato
@@ -76,18 +70,11 @@ int = TipoDato
 / = OpFactor
 2 = Numero
 ; = FinSentencia
-} = Fin
+a = Identificador
 Stack: 
-61 
+
 a=61
-￿ = Caracter
-a (Char) = 0
-a (Char) = 0
-a (Char) = 0
-a (Char) = 0
-i (Int) = 0
-j (Int) = 0
-k (Int) = 0
-l (Int) = 0
-m (Int) = 0
-n (Int) = 0
+= = Asignacion
+300 = Numero
+; = FinSentencia
+} = Fin
