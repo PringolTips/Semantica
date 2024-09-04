@@ -17,24 +17,24 @@ namespace Semantica
         }
         public void match(string espera)
         {
-            if (getContenido() == espera)
+            if (Contenido == espera)
             {
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un " + espera + "( " + getContenido() + " )",log);
+                throw new Error("Sintaxis: se espera un: " + espera + "( " + Contenido + " )" + "En la linea: " + linea, log);
             }
         }
         public void match(Tipos espera)
         {
-            if (getClasificacion() == espera)
+            if (Clasificacion == espera)
             {
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un " + espera + "( " + getContenido() + " )",log);
+                throw new Error("Sintaxis: se espera un: " + espera + "( " + Contenido + " )" + "En la linea: " + linea,log);
             }
         }
     }

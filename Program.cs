@@ -13,7 +13,7 @@ namespace Semantica
             {
                 using (Lenguaje L = new Lenguaje("prueba.cpp"))
                 {
-                    L.Program();                    
+                    L.Program();                        
                 }
             }
             catch (Exception e)

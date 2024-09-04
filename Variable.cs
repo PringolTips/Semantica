@@ -9,17 +9,13 @@ namespace Semantica
     {
         public enum TipoD
         {
-            Char, Int, Float    
+            Char, Int, Float
         };
         public enum TipoZ
         {
-            Private, Protected, Public    
+            Private, Protected, Public
         };
-        TipoD tipo;
-        string nombre;
-        float valor;
-        TipoZ zona;
-
+       
         public Variable(string nombre, TipoD tipo, TipoZ zona = TipoZ.Private)
         {
             this.nombre = nombre;
@@ -27,22 +23,10 @@ namespace Semantica
             this.zona = zona;
             this.valor = 0;
         }
-        public string getNombre()
-        {
-            return nombre;
-        }
-        public TipoD getTipo()
-        {
-            return tipo;
-        }
-        public float getValor()
-        {
-            return valor;
-        }
-        public void setValor(float valor)
-        {
-            this.valor = valor;
-        }
+        public string nombre { get; }
+        public TipoD tipo { get; }
+        public TipoZ zona { get; }
+        public float valor { get; set; }
 
     }
 }
