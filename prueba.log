@@ -1,6 +1,6 @@
 Analizador Lexico
 Autor: Vega Angeles Christopher
-Fecha:05/09/2024 09:40:34 a. m.
+Fecha:05/09/2024 09:47:25 a. m.
 using = Identificador
 System = Identificador
 ; = FinSentencia
