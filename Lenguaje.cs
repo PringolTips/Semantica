@@ -48,6 +48,28 @@ namespace Semantica
             }
             return false;
         }
+        private void ModificaVariable(String nombre, float valor)
+        {
+            foreach(Variable v in listaVariables)
+            {
+                if (v.nombre == nombre)
+                {
+                    v.valor = valor;
+                }
+            }
+        }
+        public float ObtenerValor(String nombre)
+        {
+            float num = 0;
+            foreach (Variable v in listaVariables)
+            {
+                if (v.nombre == nombre)
+                {
+                    num = v.valor;
+                }
+            }
+            return num;
+        }
          private void ImprimeVariables()
         {
             foreach (Variable v in listaVariables)
@@ -178,14 +200,17 @@ namespace Semantica
         private void Asignacion()
         {
             string variable = Contenido;
+            float temp = ObtenerValor(variable);
             match(Tipos.Identificador);
-            match("=");
-            Expresion();
-            match(";");
+            if(Contenido == "++")
+            {
+                match("++");
+                ModificaVariable(variable, temp+1);
+                S.Push(ObtenerValor(variable)); 
+            }
             float tem = Math.Abs(S.Pop());
             if (ExisteVariable(variable))
             {
-                
                 if(getTipo(variable) == Variable.TipoD.Char && tem > 255 )
                 {
                     throw new Exception("Error Semantico: La variable   (" + variable + ") esta fuera de rango");
@@ -194,16 +219,12 @@ namespace Semantica
                 {
                     throw new Exception("Error Semantico: La variable   (" + variable + ") esta fuera de rango");
                 }
-                /*else if(getTipo(variable) == Variable.TipoD.Float )
-                {
-
-                }*/
             }
             else
             {
                 throw new Exception("Error sintaxico: La variable:  " + variable + "no existe");
             }
-
+            match(";");
             ImprimeStack();
             log.WriteLine(variable + "=" + tem);
         }
