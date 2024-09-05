@@ -208,16 +208,16 @@ namespace Semantica
                 ModificaVariable(variable, temp+1);
                 S.Push(ObtenerValor(variable)); 
             }
-            float tem = Math.Abs(S.Pop());
+            float tem = Math.Abs(S.Peek());
             if (ExisteVariable(variable))
             {
                 if(getTipo(variable) == Variable.TipoD.Char && tem > 255 )
                 {
-                    throw new Exception("Error Semantico: La variable   (" + variable + ") esta fuera de rango");
+                    throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
                 }
                 else if(getTipo(variable) == Variable.TipoD.Int && tem > 65535)
                 {
-                    throw new Exception("Error Semantico: La variable   (" + variable + ") esta fuera de rango");
+                    throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
                 }
             }
             else
