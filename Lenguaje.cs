@@ -201,35 +201,37 @@ namespace Semantica
             string variable = Contenido;
             float temp = ObtenerValor(variable);
             match(Tipos.Identificador);
-            if (Contenido == "++")
-            {
-                log.WriteLine("temp: " + temp);
-                match("++");
-                ModificaVariable(variable, temp + 1);
-                S.Push(ObtenerValor(variable));
-            }
-            else
-            {
-                match("=");
-                Expresion();
-            }
-            match(";");
-            float tem = Math.Abs(S.Pop());
             if (ExisteVariable(variable))
             {
-
-                if (getTipo(variable) == Variable.TipoD.Char && tem > 255)
+                if (Contenido == "++")
                 {
-                    throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
+                    //log.WriteLine("temp: " + temp);
+                    match("++");
+                    ModificaVariable(variable, temp++);
+                    S.Push(ObtenerValor(variable));
                 }
-                else if (getTipo(variable) == Variable.TipoD.Int && tem > 65535)
+                else
                 {
-                    throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
+                    match("=");
+                    Expresion();
                 }
             }
+
             else
             {
                 throw new Exception("Error sintaxico: La variable:  " + variable + "no existe");
+            }
+            match(";");
+            float tem = Math.Abs(S.Pop());
+
+
+            if (getTipo(variable) == Variable.TipoD.Char && tem > 255)
+            {
+                throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
+            }
+            else if (getTipo(variable) == Variable.TipoD.Int && tem > 65535)
+            {
+                throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
             }
             ImprimeStack();
             log.WriteLine(variable + "=" + tem);
