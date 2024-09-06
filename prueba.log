@@ -1,6 +1,6 @@
 Analizador Lexico
 Autor: Vega Angeles Christopher
-Fecha:05/09/2024 09:47:25 a. m.
+Fecha:05/09/2024 09:23:51 a. m.
 using = Identificador
 System = Identificador
 ; = FinSentencia
@@ -51,3 +51,7 @@ n = Identificador
 ; = FinSentencia
 a = Identificador
 = = Asignacion
+300 = Numero
+; = FinSentencia
+} = Fin
+Error:  Semantico: La variable   (a) esta fuera de rango
