@@ -16,7 +16,7 @@ namespace Semantica
     {
         private List<Variable> listaVariables;
         private Stack<float> S;
-        public Lenguaje(String nombre="") : base(nombre)
+        public Lenguaje(String nombre = "prueba.cpp") : base(nombre)
         {
             listaVariables = new List<Variable>();
             S = new Stack<float>();
@@ -196,6 +196,18 @@ namespace Semantica
             }
 
         }
+        private void Dimensionvariable(string nombre, float valor)
+        {
+            
+            if (getTipo(nombre) == Variable.TipoD.Char && valor > 255)
+            {
+                throw new Error(" Semantico: La variable   (" + nombre + ") esta fuera de rango", log);
+            }
+            else if (getTipo(nombre) == Variable.TipoD.Int && valor > 65535)
+            {
+                throw new Error(" Semantico: La variable   (" + nombre + ") esta fuera de rango", log);
+            }
+        }
         //Asignacion -> Identificador = Expresion;
         private void Asignacion()
         {
@@ -203,102 +215,68 @@ namespace Semantica
             match(Tipos.Identificador);
             if (ExisteVariable(variable))
             {
-                if (Contenido == "=")
-                {
-                    match("=");
-                    Expresion();
-                    ModificaVariable(variable, S.Pop());
-                }
-                else if (Contenido == "++")
+                if (Contenido == "++")
                 {
                     match("++");
+                    Dimensionvariable(variable, ObtenerValor(variable) + 1 );
                     ModificaVariable(variable, ObtenerValor(variable) + 1);
                 }
                 else if (Contenido == "--")
                 {
                     match("--");
+                    Dimensionvariable(variable, ObtenerValor(variable) - 1);
                     ModificaVariable(variable, ObtenerValor(variable) - 1);
                 }
                 else if (Contenido == "+=")
                 {
                     match("+=");
-                    if (Clasificacion == Tipos.Identificador)
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) + ObtenerValor(Contenido));
-                        match(Tipos.Identificador);
-                    }
-                    else
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) + float.Parse(Contenido));
-                        match(Tipos.Numero);
-                    }
+                    float tem = ObtenerValor(variable);
+                    Expresion();
+                    Dimensionvariable(variable, tem + S.Peek());
+                    ModificaVariable(variable, tem + S.Pop());
+
                 }
                 else if (Contenido == "-=")
                 {
                     match("-=");
-                    if (Clasificacion == Tipos.Identificador)
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) - ObtenerValor(Contenido));
-                        match(Tipos.Identificador);
-                    }
-                    else
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) - float.Parse(Contenido));
-                        match(Tipos.Numero);
-                    }
+                    float tem = ObtenerValor(variable);
+                    Expresion();
+                    Dimensionvariable(variable,tem - S.Peek());
+                    ModificaVariable(variable, tem - S.Pop());
                 }
                 else if (Contenido == "*=")
                 {
                     match("*=");
-                    if (Clasificacion == Tipos.Identificador)
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) * ObtenerValor(Contenido));
-                        match(Tipos.Identificador);
-                    }
-                    else
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) * float.Parse(Contenido));
-                        match(Tipos.Numero);
-                    }
+                    float tem = ObtenerValor(variable);
+                    Expresion();
+                    Dimensionvariable(variable,tem * S.Peek());
+                    ModificaVariable(variable, tem * S.Pop());
                 }
                 else if (Contenido == "/=")
                 {
                     match("/=");
-                    if (Clasificacion == Tipos.Identificador)
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) / ObtenerValor(Contenido));
-                        match(Tipos.Identificador);
-                    }
-                    else
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) / float.Parse(Contenido));
-                        match(Tipos.Numero);
-                    }
+                    float tem = ObtenerValor(variable);
+                    Expresion();
+                    Dimensionvariable(variable,tem / S.Peek());
+                    ModificaVariable(variable, tem / S.Pop());
                 }
                 else if (Contenido == "%=")
                 {
                     match("%=");
-                    if (Clasificacion == Tipos.Identificador)
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) % ObtenerValor(Contenido));
-                        match(Tipos.Identificador);
-                    }
-                    else
-                    {
-                        ModificaVariable(variable, ObtenerValor(variable) % float.Parse(Contenido));
-                        match(Tipos.Numero);
-                    }
+                    float tem = ObtenerValor(variable);
+                    Expresion();
+                    Dimensionvariable(variable, tem % S.Peek());
+                    ModificaVariable(variable, tem % S.Pop());
+                }
+                else 
+                {
+                    match("=");
+                    Expresion();
+                    Dimensionvariable(variable, S.Peek());
+                    ModificaVariable(variable, S.Pop());
                 }
                 match(";");
-                float tem = Math.Abs(ObtenerValor(variable));
-                if (getTipo(variable) == Variable.TipoD.Char && tem > 255)
-                {
-                    throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
-                }
-                else if (getTipo(variable) == Variable.TipoD.Int && tem > 65535)
-                {
-                    throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
-                }
+
             }
             else
             {

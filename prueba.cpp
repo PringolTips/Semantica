@@ -9,9 +9,9 @@ static void Main(string[] args)
 
    char a;
    int i,j,k,l,m,n;
-   i =5;
+   i = 5;
    a=50;
    a++;
    a--;
-   a%=2;
+   a = 256;
  }

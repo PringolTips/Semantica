@@ -3,7 +3,7 @@ Autores
 : Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:09/09/2024 09:54:30 a. m.
+Fecha:09/09/2024 01:01:59 p. m.
 using = Identificador
 System = Identificador
 ; = FinSentencia
@@ -71,18 +71,7 @@ a=51
 ; = FinSentencia
 a = Identificador
 a=50
-%= = IncFactor
-2 = Numero
+= = Asignacion
+256 = Numero
 ; = FinSentencia
-} = Fin
-a=0
-￿ = Caracter
-Stack: 
-
-a (Char) = 0
-i (Int) = 5
-j (Int) = 0
-k (Int) = 0
-l (Int) = 0
-m (Int) = 0
-n (Int) = 0
+Error:  Semantico: La variable   (a) esta fuera de rango

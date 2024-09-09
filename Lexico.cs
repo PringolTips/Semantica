@@ -52,18 +52,9 @@ namespace Semantica
              //WS, L, D, ., E, +, -, ;, =, *, /, %, &, |, !, <, >, ?, ", {, },EOF,Ld,\n, $
         };
 
-        public Lexico(string nombre = "") // Constructor
+        public Lexico(string nombre = "prueba.cpp") // Constructor
         {     
-            if(nombre != "")
-            {
-             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");   
-            } 
-            else
-            {
-              nombre = "prueba.cpp";
-              log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");  
-            }    
-            
+            log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");   
             log.AutoFlush = true;
             this.linea = 1 ;
             log.WriteLine("Analizador Lexico");
