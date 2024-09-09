@@ -77,6 +77,14 @@ namespace Semantica
             }
             return 0;
         }
+        private float RegresaStack()
+        {
+            foreach (float e in S)
+            {
+                return e;
+            }
+            return 0;
+        }
         //Programa clasif;rerias? Variables? Main
         public void Program()
         {
@@ -105,7 +113,6 @@ namespace Semantica
 
         }
         //ListaLibrerias -> identificador (.ListaLibrerias)?
-
         private void ListaLibrerias()
         {
             match(Tipos.Identificador);
@@ -199,25 +206,97 @@ namespace Semantica
         private void Asignacion()
         {
             string variable = Contenido;
-            float temp = ObtenerValor(variable);
             match(Tipos.Identificador);
-            if (Contenido == "++")
-            {
-                log.WriteLine("temp: " + temp);
-                match("++");
-                ModificaVariable(variable, temp + 1);
-                S.Push(ObtenerValor(variable));
-            }
-            else
-            {
-                match("=");
-                Expresion();
-            }
-            match(";");
-            float tem = Math.Abs(S.Pop());
             if (ExisteVariable(variable))
             {
-
+                if (Contenido == "=")
+                {
+                    match("=");
+                    Expresion();
+                    ModificaVariable(variable, S.Pop());
+                }
+                else if (Contenido == "++")
+                {
+                    match("++");
+                    ModificaVariable(variable, ObtenerValor(variable) + 1);
+                }
+                else if (Contenido == "--")
+                {
+                    match("--");
+                    ModificaVariable(variable, ObtenerValor(variable) - 1);
+                }
+                else if (Contenido == "+=")
+                {
+                    match("+=");
+                    if (Clasificacion == Tipos.Identificador)
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) + ObtenerValor(Contenido));
+                        match(Tipos.Identificador);
+                    }
+                    else
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) + float.Parse(Contenido));
+                        match(Tipos.Numero);
+                    }
+                }
+                else if (Contenido == "-=")
+                {
+                    match("-=");
+                    if (Clasificacion == Tipos.Identificador)
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) - ObtenerValor(Contenido));
+                        match(Tipos.Identificador);
+                    }
+                    else
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) - float.Parse(Contenido));
+                        match(Tipos.Numero);
+                    }
+                }
+                else if (Contenido == "*=")
+                {
+                    match("*=");
+                    if (Clasificacion == Tipos.Identificador)
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) * ObtenerValor(Contenido));
+                        match(Tipos.Identificador);
+                    }
+                    else
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) * float.Parse(Contenido));
+                        match(Tipos.Numero);
+                    }
+                }
+                else if (Contenido == "/=")
+                {
+                    match("/=");
+                    if (Clasificacion == Tipos.Identificador)
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) / ObtenerValor(Contenido));
+                        match(Tipos.Identificador);
+                    }
+                    else
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) / float.Parse(Contenido));
+                        match(Tipos.Numero);
+                    }
+                }
+                else if (Contenido == "%=")
+                {
+                    match("%=");
+                    if (Clasificacion == Tipos.Identificador)
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) % ObtenerValor(Contenido));
+                        match(Tipos.Identificador);
+                    }
+                    else
+                    {
+                        ModificaVariable(variable, ObtenerValor(variable) % float.Parse(Contenido));
+                        match(Tipos.Numero);
+                    }
+                }
+                match(";");
+                float tem = Math.Abs(ObtenerValor(variable));
                 if (getTipo(variable) == Variable.TipoD.Char && tem > 255)
                 {
                     throw new Error(" Semantico: La variable   (" + variable + ") esta fuera de rango", log);
@@ -231,12 +310,10 @@ namespace Semantica
             {
                 throw new Exception("Error sintaxico: La variable:  " + variable + "no existe");
             }
-            ImprimeStack();
-            log.WriteLine(variable + "=" + tem);
+            log.WriteLine(variable + "=" + ObtenerValor(variable));
         }
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?
-
         private void If()
         {
             match("if");
@@ -373,7 +450,6 @@ namespace Semantica
                 match(";");
             }
         }
-        //
         //Main      -> static void Main(string[] args) BloqueInstrucciones 
         private void Main()
         {
@@ -387,8 +463,7 @@ namespace Semantica
             match("args");
             match(")");
             BloqueInstrucciones();
-
-
+            ImprimeStack();
         }
         //Expresion -> Termino MasTermino
         private void
@@ -413,14 +488,12 @@ namespace Semantica
                     case "-": S.Push(R1 - R2); break;
                 }
             }
-
         }
         //Termino -> Factor PorFactor
         private void Termino()
         {
             Factor();
             PorFactor();
-
         }
         //PorFactor -> (OperadorFactor Factor)?
         private void PorFactor()
@@ -439,7 +512,6 @@ namespace Semantica
                     case "%": S.Push(R1 % R2); break;
                 }
             }
-
         }
         private void ImprimeStack()
         {
@@ -475,6 +547,5 @@ namespace Semantica
                 match(")");
             }
         }
-
     }
 }

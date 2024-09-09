@@ -10,10 +10,7 @@ namespace Semantica
     {
         private StreamReader archivo;
         public StreamWriter log;
-
         protected int linea { get; set; }
-
-
         const int F = -1;
         const int E = -2;
         int[,] TRAND =
@@ -76,7 +73,9 @@ namespace Semantica
             log.AutoFlush = true;
             this.linea = 1 ;
             log.WriteLine("Analizador Lexico");
-            log.WriteLine("Autor: Vega Angeles Christopher");
+            log.WriteLine("Autores\n: Vega Angeles Christopher");
+            log.WriteLine("Moya Arreola Cristian");
+            log.WriteLine("Martinez Prieto Angel Josue");
             log.WriteLine("Fecha:" + DateTime.Now);
             if (Path.GetExtension(nombre) != ".cpp")
             {
