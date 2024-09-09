@@ -28,3 +28,18 @@ C:\Users\Cristian\Documents\Semestre 5\Lenguajes y automatas ll\Semantica\obj\De
 C:\Users\Cristian\Documents\Semestre 5\Lenguajes y automatas ll\Semantica\obj\Debug\net8.0\Semantica.pdb
 C:\Users\Cristian\Documents\Semestre 5\Lenguajes y automatas ll\Semantica\obj\Debug\net8.0\Semantica.genruntimeconfig.cache
 C:\Users\Cristian\Documents\Semestre 5\Lenguajes y automatas ll\Semantica\obj\Debug\net8.0\ref\Semantica.dll
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\bin\Debug\net8.0\Semantica.exe
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\bin\Debug\net8.0\Semantica.deps.json
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\bin\Debug\net8.0\Semantica.runtimeconfig.json
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\bin\Debug\net8.0\Semantica.dll
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\bin\Debug\net8.0\Semantica.pdb
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.AssemblyInfoInputs.cache
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.AssemblyInfo.cs
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.csproj.CoreCompileInputs.cache
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.sourcelink.json
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.dll
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\refint\Semantica.dll
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.pdb
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\Semantica.genruntimeconfig.cache
+C:\Users\marti\OneDrive\Documentos\Angel\5to semestre\LyA 2\Semantica\obj\Debug\net8.0\ref\Semantica.dll

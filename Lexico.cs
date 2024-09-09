@@ -51,25 +51,19 @@ namespace Semantica
         /*32*/{ F, F,32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
              //WS, L, D, ., E, +, -, ;, =, *, /, %, &, |, !, <, >, ?, ", {, },EOF,Ld,\n, $
         };
-        public Lexico() // Constructor
-        {
-            log = new StreamWriter("prueba.log");
-            log.AutoFlush = true;
-            this.linea = 1 ;
-            log.WriteLine("Analizador Lexico");
-            log.WriteLine("Autores\n: Vega Angeles Christopher");
-            log.WriteLine("Moya Arreola Cristian");
-            log.WriteLine("Martinez Prieto Angel Josue");
-            log.WriteLine("Fecha: " + DateTime.Now);
-            if (!File.Exists("prueba.cpp"))
+
+        public Lexico(string nombre = "") // Constructor
+        {     
+            if(nombre != "")
             {
-                throw new Error("El archivo prueba.cpp no existe", log);
-            }
-            archivo = new StreamReader("prueba.cpp");
-        }
-        public Lexico(string nombre ) // Constructor
-        {
-            log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
+             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");   
+            } 
+            else
+            {
+              nombre = "prueba.cpp";
+              log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");  
+            }    
+            
             log.AutoFlush = true;
             this.linea = 1 ;
             log.WriteLine("Analizador Lexico");

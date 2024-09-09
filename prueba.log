@@ -1,14 +1,9 @@
 Analizador Lexico
-<<<<<<< HEAD
 Autores
 : Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:08/09/2024 10:46:25 p. m.
-=======
-Autor: Vega Angeles Christopher
-Fecha:06/09/2024 09:48:45 a. m.
->>>>>>> 206d64ea5d5c067fb9a531d6343e12f744920e65
+Fecha:09/09/2024 09:54:30 a. m.
 using = Identificador
 System = Identificador
 ; = FinSentencia
@@ -79,7 +74,6 @@ a=50
 %= = IncFactor
 2 = Numero
 ; = FinSentencia
-<<<<<<< HEAD
 } = Fin
 a=0
 ￿ = Caracter
@@ -92,7 +86,3 @@ k (Int) = 0
 l (Int) = 0
 m (Int) = 0
 n (Int) = 0
-=======
-prueba = Identificador
-Error:  Semantico: La variable   (a) esta fuera de rango
->>>>>>> 206d64ea5d5c067fb9a531d6343e12f744920e65

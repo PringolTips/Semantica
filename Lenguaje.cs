@@ -16,13 +16,7 @@ namespace Semantica
     {
         private List<Variable> listaVariables;
         private Stack<float> S;
-
-        public Lenguaje()
-        {
-            listaVariables = new List<Variable>();
-            S = new Stack<float>();
-        }
-        public Lenguaje(String nombre) : base(nombre)
+        public Lenguaje(String nombre="") : base(nombre)
         {
             listaVariables = new List<Variable>();
             S = new Stack<float>();
