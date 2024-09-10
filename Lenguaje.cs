@@ -16,7 +16,7 @@ namespace Semantica
     {
         private List<Variable> listaVariables;
         private Stack<float> S;
-        public Lenguaje(String nombre = "prueba.cpp") : base(nombre)
+        public Lenguaje(String nombre = "prueba.cpp") 
         {
             listaVariables = new List<Variable>();
             S = new Stack<float>();
@@ -71,14 +71,6 @@ namespace Semantica
             }
             return 0;
         }
-        private float RegresaStack()
-        {
-            foreach (float e in S)
-            {
-                return e;
-            }
-            return 0;
-        }
         //Programa clasif;rerias? Variables? Main
         public void Program()
         {
@@ -103,8 +95,6 @@ namespace Semantica
             {
                 Librerias();
             }
-
-
         }
         //ListaLibrerias -> identificador (.ListaLibrerias)?
         private void ListaLibrerias()
@@ -116,7 +106,6 @@ namespace Semantica
                 ListaLibrerias();
             }
         }
-
         //Variables -> tipo_dato Lista_identificadores; Variables?
         private void Variables()
         {
@@ -129,7 +118,6 @@ namespace Semantica
                 Variables();
             }
         }
-
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoD t)
         {
@@ -140,7 +128,6 @@ namespace Semantica
                 match(",");
                 ListaIdentificadores(t);
             }
-
         }
         //BloqueInstrucciones -> { listaIntrucciones? }
         private void BloqueInstrucciones()
@@ -151,7 +138,6 @@ namespace Semantica
                 ListaInstrucciones();
             }
             match("}");
-
         }
         //ListaInstrucciones -> Instruccion ListaInstrucciones?
         private void ListaInstrucciones()
@@ -194,11 +180,9 @@ namespace Semantica
             {
                 Asignacion();
             }
-
         }
         private void Dimensionvariable(string nombre, float valor)
-        {
-            
+        {    
             if (getTipo(nombre) == Variable.TipoD.Char && valor > 255)
             {
                 throw new Error(" Semantico: La variable   (" + nombre + ") esta fuera de rango", log);
@@ -213,76 +197,60 @@ namespace Semantica
         {
             string variable = Contenido;
             match(Tipos.Identificador);
-            if (ExisteVariable(variable))
-            {
+            float tem;
                 if (Contenido == "++")
                 {
                     match("++");
                     Dimensionvariable(variable, ObtenerValor(variable) + 1 );
-                    ModificaVariable(variable, ObtenerValor(variable) + 1);
                 }
                 else if (Contenido == "--")
                 {
                     match("--");
                     Dimensionvariable(variable, ObtenerValor(variable) - 1);
-                    ModificaVariable(variable, ObtenerValor(variable) - 1);
                 }
                 else if (Contenido == "+=")
                 {
                     match("+=");
-                    float tem = ObtenerValor(variable);
+                    tem = ObtenerValor(variable);
                     Expresion();
-                    Dimensionvariable(variable, tem + S.Peek());
-                    ModificaVariable(variable, tem + S.Pop());
-
+                    Dimensionvariable(variable, tem + S.Pop());
                 }
                 else if (Contenido == "-=")
                 {
                     match("-=");
-                    float tem = ObtenerValor(variable);
+                    tem = ObtenerValor(variable);
                     Expresion();
-                    Dimensionvariable(variable,tem - S.Peek());
-                    ModificaVariable(variable, tem - S.Pop());
+                    Dimensionvariable(variable,tem - S.Pop());
                 }
                 else if (Contenido == "*=")
                 {
                     match("*=");
-                    float tem = ObtenerValor(variable);
+                    tem = ObtenerValor(variable);
                     Expresion();
-                    Dimensionvariable(variable,tem * S.Peek());
-                    ModificaVariable(variable, tem * S.Pop());
+                    Dimensionvariable(variable,tem * S.Pop());
                 }
                 else if (Contenido == "/=")
                 {
                     match("/=");
-                    float tem = ObtenerValor(variable);
+                    tem = ObtenerValor(variable);
                     Expresion();
-                    Dimensionvariable(variable,tem / S.Peek());
-                    ModificaVariable(variable, tem / S.Pop());
+                    Dimensionvariable(variable,tem / S.Pop());
                 }
                 else if (Contenido == "%=")
                 {
                     match("%=");
-                    float tem = ObtenerValor(variable);
+                    tem = ObtenerValor(variable);
                     Expresion();
-                    Dimensionvariable(variable, tem % S.Peek());
-                    ModificaVariable(variable, tem % S.Pop());
+                    Dimensionvariable(variable, tem % S.Pop());
                 }
                 else 
                 {
                     match("=");
                     Expresion();
-                    Dimensionvariable(variable, S.Peek());
-                    ModificaVariable(variable, S.Pop());
+                    Dimensionvariable(variable, S.Pop());
                 }
                 match(";");
-
-            }
-            else
-            {
-                throw new Exception("Error sintaxico: La variable:  " + variable + "no existe");
-            }
-            log.WriteLine(variable + "=" + ObtenerValor(variable));
+            //log.WriteLine(variable + "=" + ObtenerValor(variable));
         }
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?

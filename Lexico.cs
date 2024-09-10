@@ -10,7 +10,7 @@ namespace Semantica
     {
         private StreamReader archivo;
         public StreamWriter log;
-        protected int linea { get; set; }
+        protected int linea;
         const int F = -1;
         const int E = -2;
         int[,] TRAND =
@@ -51,12 +51,11 @@ namespace Semantica
         /*32*/{ F, F,32, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F, F},
              //WS, L, D, ., E, +, -, ;, =, *, /, %, &, |, !, <, >, ?, ", {, },EOF,Ld,\n, $
         };
-
         public Lexico(string nombre = "prueba.cpp") // Constructor
-        {     
-            log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");   
+        {
+            log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
-            this.linea = 1 ;
+            this.linea = 1;
             log.WriteLine("Analizador Lexico");
             log.WriteLine("Autores\n: Vega Angeles Christopher");
             log.WriteLine("Moya Arreola Cristian");
@@ -77,7 +76,6 @@ namespace Semantica
             archivo.Close();
             log.Close();
         }
-
         int Columna(char c)
         {
             if (finArchivo())
@@ -210,8 +208,6 @@ namespace Semantica
 
             }
         }
-
-
         public void nextToken()
         {
             char c;
@@ -222,7 +218,7 @@ namespace Semantica
             {
                 c = (char)archivo.Peek();
                 Estado = TRAND[Estado, Columna(c)];
-                
+
                 Clasificar(Estado);
                 if (Estado >= 0)
                 {
@@ -270,11 +266,9 @@ namespace Semantica
                 }
 
             }
-
             Contenido = buffer;
             log.WriteLine(Contenido + " = " + Clasificacion);
         }
-
         public bool finArchivo()
         {
             return archivo.EndOfStream;

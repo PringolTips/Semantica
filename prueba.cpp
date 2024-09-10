@@ -13,5 +13,6 @@ static void Main(string[] args)
    a=50;
    a++;
    a--;
-   a = 256;
+   a = 250;
+   a%=2;
  }
