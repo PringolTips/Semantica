@@ -3,7 +3,7 @@ Autores
 : Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:10/09/2024 09:52:18 a. m.
+Fecha:11/09/2024 08:26:50 a. m.
 using = Identificador
 System = Identificador
 ; = FinSentencia
@@ -52,27 +52,9 @@ m = Identificador
 , = Caracter
 n = Identificador
 ; = FinSentencia
-i = Identificador
-= = Asignacion
-5 = Numero
-; = FinSentencia
 a = Identificador
 = = Asignacion
-50 = Numero
-; = FinSentencia
-a = Identificador
-++ = IncTermino
-; = FinSentencia
-a = Identificador
--- = IncTermino
-; = FinSentencia
-a = Identificador
-= = Asignacion
-250 = Numero
-; = FinSentencia
-a = Identificador
-%= = IncFactor
-2 = Numero
+255 = Numero
 ; = FinSentencia
 } = Fin
 ￿ = Caracter
