@@ -18,6 +18,7 @@ namespace Semantica
         private Stack<float> S;
         public Lenguaje(String nombre = "prueba.cpp")
         {
+            log.WriteLine("Analisis sintactico");
             listaVariables = new List<Variable>();
             S = new Stack<float>();
         }
@@ -197,73 +198,80 @@ namespace Semantica
         {
             string variable = Contenido;
             match(Tipos.Identificador);
-            float tem, resultado = 0;
+            var v = listaVariables.Find(delegate(Variable x){return x.nombre == variable;});
+            float nuevovalor = v.valor ;
             if (Contenido == "++")
             {
                 match("++");
                 Dimensionvariable(variable, ObtenerValor(variable) + 1);
-                resultado = 0;
+                nuevovalor++;
             }
             else if (Contenido == "--")
             {
                 match("--");
                 Dimensionvariable(variable, ObtenerValor(variable) - 1);
-                resultado = 0;
+                nuevovalor--;
+                
             }
             else if (Contenido == "+=")
             {
                 match("+=");
-                tem = ObtenerValor(variable);
+                
                 Expresion();
-                resultado = S.Pop();
-                Dimensionvariable(variable, tem + resultado);
+                nuevovalor += S.Pop();
+            
             }
             else if (Contenido == "-=")
             {
                 match("-=");
-                tem = ObtenerValor(variable);
+
                 Expresion();
-                resultado = S.Pop();
-                Dimensionvariable(variable, tem - resultado);
+                nuevovalor -= S.Pop();
+                
             }
             else if (Contenido == "*=")
             {
                 match("*=");
-                tem = ObtenerValor(variable);
+               
                 Expresion();
-                resultado = S.Pop();
-                Dimensionvariable(variable, tem * resultado);
+                nuevovalor *= S.Pop();
             }
             else if (Contenido == "/=")
             {
                 match("/=");
-                tem = ObtenerValor(variable);
+             
                 Expresion();
-                resultado = S.Pop();
-                Dimensionvariable(variable, tem / resultado);
+                nuevovalor /= S.Pop();
             }
             else if (Contenido == "%=")
             {
                 match("%=");
-                tem = ObtenerValor(variable);
                 Expresion();
-                resultado = S.Pop();
-                Dimensionvariable(variable, tem % resultado);
+               nuevovalor %= S.Pop();
             }
             else
             {
                 match("=");
                 Expresion();
-                Dimensionvariable(variable, S.Pop());
+                nuevovalor = S.Pop ();
             }
             match(";");
-            log.WriteLine(variable + " = " + resultado);
-            if(resultado > (rangoTipoDato(listaVariables.Find)))
+            if(AnalisisSemnatico(variable, nuevovalor))
+            {
+                v.valor = nuevovalor;
+            }
+            ImprimeVariables();
+            /*if(resultado > (rangoTipoDato(listaVariables.Find)))
             {
                 throw new Error("Semantico ", log, linea);
-            }
+            }*/
         }
-        float rangoTipoDato(Variable.tipoD T)
+        bool AnalisisSemnatico(string variable, float valor)
+        {
+            return true;
+            
+        }
+       /* float rangoTipoDato(Variable.TipoD T)
         {
             switch (tipoDato.tipo)
             {
@@ -272,7 +280,7 @@ namespace Semantica
                 case Variable.TipoD.Char: return 255;
                 default: return 0;
             }
-        }
+        }*/
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?
         private void If()
