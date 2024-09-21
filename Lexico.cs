@@ -57,7 +57,7 @@ namespace Semantica
             log.AutoFlush = true;
             this.linea = 1;
             log.WriteLine("Analizador Lexico");
-            log.WriteLine("Autores\n: Vega Angeles Christopher");
+            log.WriteLine("Autores: \nVega Angeles Christopher");
             log.WriteLine("Moya Arreola Cristian");
             log.WriteLine("Martinez Prieto Angel Josue");
             log.WriteLine("Fecha:" + DateTime.Now);

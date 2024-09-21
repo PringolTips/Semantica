@@ -5,11 +5,11 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 /*
-    1. Colocar el numero de linea en errores lexicos y sintaticticos
-    2. Cambiar la clase token por atributis publicos (get ,  set)
-    3. Cambiar los constructores de la clase lexico usando parametros por default
+    1. Usar find en lugar del for each
+    2. Valiar que no existan varibles duplicadas
+    3. Validar que existan las variables en las expressions matematicas
+       Asignacion 
 */
-
 namespace Semantica
 {
     public class Lenguaje : Sintaxis
@@ -18,7 +18,7 @@ namespace Semantica
         private Stack<float> S;
         public Lenguaje(String nombre = "prueba.cpp")
         {
-            log.WriteLine("Analisis sintactico");
+            log.WriteLine("Analisis Sintactico");
             listaVariables = new List<Variable>();
             S = new Stack<float>();
         }
@@ -32,17 +32,6 @@ namespace Semantica
             }
             return Tipo;
         }
-        private bool ExisteVariable(string Nombre)
-        {
-            foreach (Variable v in listaVariables)
-            {
-                if (v.nombre == Nombre)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
         private void ImprimeVariables()
         {
             foreach (Variable v in listaVariables)
@@ -50,29 +39,7 @@ namespace Semantica
                 log.WriteLine(v.nombre + " (" + v.tipo + ")" + " = " + v.valor);
             }
         }
-        private void ModificaVariable(string nombre, float valor)
-        {
-            foreach (Variable v in listaVariables)
-            {
-                if (v.nombre == nombre)
-                {
-                    v.valor = valor;
-                    return;
-                }
-            }
-        }
-        private float ObtenerValor(string nombre)
-        {
-            foreach (Variable v in listaVariables)
-            {
-                if (v.nombre == nombre)
-                {
-                    return v.valor;
-                }
-            }
-            return 0;
-        }
-        //Programa clasif;rerias? Variables? Main
+        //Programa Librerias? Variables? Main
         public void Program()
         {
             if (Contenido == "using")
@@ -91,7 +58,7 @@ namespace Semantica
         {
             match("using");
             ListaLibrerias();
-            match(Tipos.FinSentencia);
+            match(";");
             if (Contenido == "using")
             {
                 Librerias();
@@ -114,10 +81,10 @@ namespace Semantica
             match(Tipos.TipoDato);
             ListaIdentificadores(Tipo);
             match(";");
-            if (Clasificacion == Tipos.TipoDato)
+            /*if (Clasificacion == Tipos.TipoDato)
             {
                 Variables();
-            }
+            }*/
         }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoD t)
@@ -198,48 +165,45 @@ namespace Semantica
         {
             string variable = Contenido;
             match(Tipos.Identificador);
-            var v = listaVariables.Find(delegate(Variable x){return x.nombre == variable;});
-            float nuevovalor = v.valor ;
+
+            var v = listaVariables.Find(delegate (Variable x) { return x.nombre == variable; });
+            float nuevovalor = v.valor;
             if (Contenido == "++")
             {
                 match("++");
-                Dimensionvariable(variable, ObtenerValor(variable) + 1);
+                //Dimensionvariable(variable, ObtenerValor(variable) + 1);
                 nuevovalor++;
             }
             else if (Contenido == "--")
             {
                 match("--");
-                Dimensionvariable(variable, ObtenerValor(variable) - 1);
+                // Dimensionvariable(variable, ObtenerValor(variable) - 1);
                 nuevovalor--;
-                
+
             }
             else if (Contenido == "+=")
             {
                 match("+=");
-                
                 Expresion();
                 nuevovalor += S.Pop();
-            
+
             }
             else if (Contenido == "-=")
             {
                 match("-=");
-
                 Expresion();
                 nuevovalor -= S.Pop();
-                
+
             }
             else if (Contenido == "*=")
             {
                 match("*=");
-               
                 Expresion();
                 nuevovalor *= S.Pop();
             }
             else if (Contenido == "/=")
             {
                 match("/=");
-             
                 Expresion();
                 nuevovalor /= S.Pop();
             }
@@ -247,40 +211,26 @@ namespace Semantica
             {
                 match("%=");
                 Expresion();
-               nuevovalor %= S.Pop();
+                nuevovalor %= S.Pop();
             }
             else
             {
                 match("=");
                 Expresion();
-                nuevovalor = S.Pop ();
+                nuevovalor = S.Pop();
             }
             match(";");
-            if(AnalisisSemnatico(variable, nuevovalor))
+            if (AnalisisSemnatico(variable, nuevovalor))
             {
                 v.valor = nuevovalor;
             }
-            ImprimeVariables();
-            /*if(resultado > (rangoTipoDato(listaVariables.Find)))
-            {
-                throw new Error("Semantico ", log, linea);
-            }*/
+            log.WriteLine(variable + " = " + nuevovalor);
         }
         bool AnalisisSemnatico(string variable, float valor)
         {
             return true;
-            
+
         }
-       /* float rangoTipoDato(Variable.TipoD T)
-        {
-            switch (tipoDato.tipo)
-            {
-                case Variable.TipoD.Int: return float.MaxValue;
-                case Variable.TipoD.Float: return float.MaxValue;
-                case Variable.TipoD.Char: return 255;
-                default: return 0;
-            }
-        }*/
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?
         private void If()

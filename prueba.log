@@ -3,67 +3,11 @@ Autores
 : Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:11/09/2024 08:26:50 a. m.
-using = Identificador
-System = Identificador
-; = FinSentencia
-using = Identificador
-System = Identificador
-. = Caracter
-Collections = Identificador
-. = Caracter
-Generic = Identificador
-; = FinSentencia
-using = Identificador
-System = Identificador
-. = Caracter
-Linq = Identificador
-; = FinSentencia
-using = Identificador
-System = Identificador
-. = Caracter
-Threading = Identificador
-. = Caracter
-Tasks = Identificador
-; = FinSentencia
-static = Identificador
-void = Identificador
-Main = Identificador
-( = Caracter
-string = Identificador
-[ = Caracter
-] = Caracter
-args = Identificador
-) = Caracter
-{ = Inicio
-char = TipoDato
-a = Identificador
-; = FinSentencia
-int = TipoDato
-i = Identificador
-, = Caracter
-j = Identificador
-, = Caracter
-k = Identificador
-, = Caracter
-l = Identificador
-, = Caracter
-m = Identificador
-, = Caracter
-n = Identificador
-; = FinSentencia
-a = Identificador
-= = Asignacion
-255 = Numero
-; = FinSentencia
-} = Fin
-￿ = Caracter
+Fecha:21/09/2024 04:07:39 p. m.
+Analisis Sintactico
+a = 61
+a = 62
+a = 100
 Stack: 
 
-a (Char) = 0
-i (Int) = 0
-j (Int) = 0
-k (Int) = 0
-l (Int) = 0
-m (Int) = 0
-n (Int) = 0
+a (Char) = 100
