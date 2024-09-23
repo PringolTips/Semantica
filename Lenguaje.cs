@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,6 +10,16 @@ using System.Xml.Serialization;
     2. Valiar que no existan varibles duplicadas
     3. Validar que existan las variables en las expressions matematicas
        Asignacion 
+    4. 1.5 + 1.5 = 3 <- float porque float + float = float
+    5. Meter el valor de la variable al stack
+    6. Asignar una expresión matematica a la variable al momento de declararla
+       verificando la semantica
+    7. Emular el if
+    8. Emular el read & readLine y el console
+    9. Emular el do
+    10. Emular el for
+    11. Emular el while
+    12. Castear
 */
 namespace Semantica
 {
@@ -220,16 +231,62 @@ namespace Semantica
                 nuevovalor = S.Pop();
             }
             match(";");
-            if (AnalisisSemnatico(variable, nuevovalor))
+            if (AnalisisSemnatico(v, nuevovalor))
             {
                 v.valor = nuevovalor;
             }
+            else
+            {
+                throw new Error("Semantico: No puedo asignar un " + valorToTipo(nuevovalor)
+                + "a un " + v.tipo, log, linea);
+            }
             log.WriteLine(variable + " = " + nuevovalor);
         }
-        bool AnalisisSemnatico(string variable, float valor)
+        private String valorToTipo(float valor)
         {
-            return true;
+            if (valor % 1 != 0)
+            {
+                return "float";
+            }
+            else if (valor <= 255)
+            {
+                return "char";
+            }
+            else if (valor <= 65535)
+            {
+                return "int";
+            }
+            return "float";
+        }
+        bool AnalisisSemnatico(Variable v, float valor)
+        {
+            if (valor % 1 != 0)
+            {
+                if (v.tipo == Variable.TipoD.Char)
+                {
+                    if (valor <= 255)
+                    {
+                        return true;
+                    }
 
+                }
+                else if (v.tipo == Variable.TipoD.Int)
+                {
+                    if (valor <= 65535)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                if (v.tipo == Variable.TipoD.Char || v.tipo == Variable.TipoD.Char)
+                {
+                    return true;
+                }
+            }
+            return true;
         }
         //If -> if (Condicion) bloqueInstrucciones | instruccion
         //     (else bloqueInstrucciones | instruccion)?
@@ -451,19 +508,34 @@ namespace Semantica
             }
             else if (Clasificacion == Tipos.Identificador)
             {
+                //5.
                 match(Tipos.Identificador);
             }
             else
             {
+                bool huboCast = false;
+                Variable.TipoD aCastear = Variable.TipoD.Char;
                 match("(");
                 if (Clasificacion == Tipos.TipoDato)
                 {
+                    huboCast = true;
+                    aCastear = Tipo(Contenido);
                     match(Tipos.TipoDato);
                     match(")");
                     match("(");
+                    //12
+                    // Sacar un elemnto del stack
+                    //Castearlo
+                    //Meterlo casteado
                 }
                 Expresion();
                 match(")");
+                if(huboCast)
+                {
+                    float valor = S.Pop();
+                    // Castearlo
+                    S.Push(valor);
+                }
             }
         }
     }
