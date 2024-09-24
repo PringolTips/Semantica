@@ -15,11 +15,11 @@ using System.Xml.Serialization;
     6. Asignar una expresión matematica a la variable al momento de declararla
        verificando la semantica
     7. Emular el if
-    8. Emular el read & readLine y el console
+    8. VAlidar que en el ReadLine se capturen solo numeros e implementar una exception
+    9. Desarrollar lista de contcatenacion
     9. Emular el do
     10. Emular el for
     11. Emular el while
-    12. Castear
 */
 namespace Semantica
 {
@@ -228,7 +228,20 @@ namespace Semantica
             {
                 match("=");
                 Expresion();
-                nuevovalor = S.Pop();
+                if (Contenido == "Consola")
+                {
+                    match("Read");
+                    float valor = Console.Read();
+                }
+                else
+                {
+                    match("ReadLine");
+                    nuevovalor = float.Parse("" + Console.ReadLine());
+                    //8
+                }
+                match("(");
+                match(")");
+                
             }
             match(";");
             if (AnalisisSemnatico(v, nuevovalor))
@@ -398,33 +411,33 @@ namespace Semantica
             if (Contenido == "WriteLine")
             {
                 match("WriteLine");
-                match("(");
-                match(Tipos.Cadena);
-                match(")");
-                match(";");
             }
             else if (Contenido == "Write")
             {
                 match("Write");
-                match("(");
+            }
+            match("(");
+            if(Clasificacion == Tipos.Cadena)
+            {
                 match(Tipos.Cadena);
-                match(")");
-                match(";");
+                if(Contenido == "+")
+                {
+                    listaConcatenacion();
+                }
             }
-            else if (Contenido == "Read")
+            match(")");
+            match(";");
+        }
+
+        string listaConcatenacion()
+        {
+            match("+");
+            match(Tipos.Identificador);
+            if(Contenido == "+")
             {
-                match("Read");
-                match("(");
-                match(")");
-                match(";");
+                listaConcatenacion();
             }
-            else if (Contenido == "ReadLine")
-            {
-                match("ReadLine");
-                match("(");
-                match(")");
-                match(";");
-            }
+            return "";
         }
         //Main      -> static void Main(string[] args) BloqueInstrucciones 
         private void Main()
@@ -530,10 +543,19 @@ namespace Semantica
                 }
                 Expresion();
                 match(")");
-                if(huboCast)
+                if (huboCast && aCastear != Variable.TipoD.Float)
                 {
                     float valor = S.Pop();
                     // Castearlo
+                    if (aCastear == Variable.TipoD.Char)
+                    {
+                        valor %= 256;
+                    }
+                    else
+                    {
+                        valor %= 65536;
+                    }
+
                     S.Push(valor);
                 }
             }
