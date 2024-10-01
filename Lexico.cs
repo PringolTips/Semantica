@@ -239,15 +239,15 @@ namespace Semantica
             {
                 if (Clasificacion == Tipos.Numero)
                 {
-                    throw new Error(" lexico: se espera un digito en la linea: " + linea + "   " + buffer, log);
+                    throw new Error(" Se espera un digito " + buffer, log, linea);
                 }
                 else if (Clasificacion == Tipos.Cadena)
                 {
-                    throw new Error(" lexico: se espera cierre de cadena en la linea:" + linea + "   " + buffer, log);
+                    throw new Error(" Se espera cierre de cadena " + buffer, log, linea);
                 }
                 else if (Clasificacion == Tipos.OpFactor)
                 {
-                    throw new Error(" lexico: se espera cierre de Comentario en la linea: " + linea + "   " + buffer, log);
+                    throw new Error(" Se espera un cierre de comentario\n " + buffer, log, linea);
                 }
             }
 
