@@ -446,11 +446,15 @@ namespace Semantica
         //           Console.(Read | ReadLine) ();
         private void console(bool ejecutar)
         {
+            char quitar = '"';
+            String cadena = "";
+            int condicion  = 0;
             match("Console");
             match(".");
             if (Contenido == "WriteLine")
             {
                 match("WriteLine");
+                condicion = 1;
             }
             else
             {
@@ -461,10 +465,13 @@ namespace Semantica
             {
                 if (ejecutar)
                 {
-                    Console.WriteLine(Contenido);
+                    cadena = Contenido;
+                    cadena = cadena.Replace(quitar.ToString(), "");
+                    if(condicion == 1)
+                    Console.WriteLine(cadena);
+                    else
+                    Console.Write(cadena);
                 }
-                // Considerar el Write
-                // Quitar las comillas
                 match(Tipos.Cadena);
                 if (Contenido == "+")
                 {
@@ -477,7 +484,7 @@ namespace Semantica
 
         string listaConcatenacion()
         {
-             match("+");
+            match("+");
             match(Tipos.Identificador); // Validar que exista la variable
             if (Contenido == "+")
             {
