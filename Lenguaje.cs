@@ -46,11 +46,20 @@ namespace Semantica
             }
             return Tipo;
         }
-        private void ImprimeVariables()
+         private bool ImprimeVariables()
         {
-            foreach (Variable v in listaVariables)
+            if (listaVariables.Count > 0)
             {
-                log.WriteLine(v.nombre + " (" + v.tipo + ")" + " = " + v.valor);
+                listaVariables.Find(v =>
+                {
+                    log.WriteLine(v.nombre + " (" + v.tipo + ")" + " = " + v.valor);
+                    return false;
+                });
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         //Programa Librerias? Variables? Main
@@ -158,17 +167,6 @@ namespace Semantica
             {
                 Asignacion(ejecutar);
                 match(";");
-            }
-        }
-        private void Dimensionvariable(string nombre, float valor)
-        {
-            if (getTipo(nombre) == Variable.TipoD.Char && valor > 255)
-            {
-                throw new Error(" Semantico: La variable   (" + nombre + ") esta fuera de rango", log);
-            }
-            else if (getTipo(nombre) == Variable.TipoD.Int && valor > 65535)
-            {
-                throw new Error(" Semantico: La variable   (" + nombre + ") esta fuera de rango", log);
             }
         }
         //Asignacion -> Identificador = Expresion;
@@ -553,15 +551,6 @@ namespace Semantica
                     case "%": S.Push(R1 % R2); break;
                 }
             }
-        }
-        private void ImprimeStack()
-        {
-            log.WriteLine("Stack: ");
-            foreach (float e in S)
-            {
-                log.Write(e + " ");
-            }
-            log.WriteLine();
         }
         //Factor -> numero | identificador | (Expresion)
         private void Factor()
