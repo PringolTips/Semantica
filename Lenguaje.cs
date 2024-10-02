@@ -6,16 +6,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 /*
-    1. Usar find en lugar del for each
-    2. Valiar que no existan varibles duplicadas
+    1. Usar find en lugar del for each *
+    2. Valiar que no existan varibles duplicadas 
     3. Validar que existan las variables en las expressions matematicas
-       Asignacion 
+       Asignacion *
     4. 1.5 + 1.5 = 3 <- float porque float + float = float *
     5. Meter el valor de la variable al stack
     6. Asignar una expresión matematica a la variable al momento de declararla
        verificando la semantica
     7. Emular el if  *
-    8. VAlidar que en el ReadLine se capturen solo numeros e implementar una exception
+    8. Validar que en el ReadLine se capturen solo numeros e implementar una exception
     12.ListaConcatenacion 30, 40, 50, 12, 0
     10. Quitar comillas y considerar el write
     9. Desarrollar lista de contcatenacion
@@ -46,7 +46,7 @@ namespace Semantica
             }
             return Tipo;
         }
-         private bool ImprimeVariables()
+        private bool ImprimeVariables()
         {
             if (listaVariables.Count > 0)
             {
@@ -105,9 +105,17 @@ namespace Semantica
             ListaIdentificadores(tipo);
             match(";");
         }
+        private bool ExisteVariable(string variableNombre)
+        {
+            return listaVariables.Exists(v => v.nombre == variableNombre);
+        }
         //ListaIdentificadores -> identificador (,ListaIdentificadores)?
         private void ListaIdentificadores(Variable.TipoD t)
         {
+            if (listaVariables.Find(v => v.nombre == Contenido) != null)
+            {
+                throw new Error("Semantico: la variable " + Contenido + " ya fue declarada", log, linea);
+            }
             listaVariables.Add(new Variable(Contenido, t));
             match(Tipos.Identificador);
             if (Contenido == ",")
@@ -174,7 +182,7 @@ namespace Semantica
         {
             string variable = Contenido;
             match(Tipos.Identificador);
-            if(!ExisteVariable(variable))
+            if (!ExisteVariable(variable))
             {
                 throw new Error("Semantico: La variable " + variable + " no ha sido declarada. ", log, linea);
             }
@@ -195,15 +203,19 @@ namespace Semantica
                         match("Read");
                         if (ejecutar)
                         {
-                            float valor = Console.Read();
+                            v.valor = Console.Read();
                         }
                         // 8
                     }
                     else
                     {
                         match("ReadLine");
-                        nuevoValor = float.Parse("" + Console.ReadLine());
-                        // 8
+                        if (!float.TryParse(Console.ReadLine(), out nuevoValor))
+                        {
+                            throw new Error("Error de formato: solo se permiten números.", log, linea);
+                        }
+                        else
+                            v.valor = nuevoValor;
                     }
                     match("(");
                     match(")");
@@ -381,7 +393,7 @@ namespace Semantica
         //      while(Condicion);
         private void Do(bool ejecutar)
         {
-            int cTemp = caracter-3;
+            int cTemp = caracter - 3;
             int lTemp = linea;
             bool resultado = false;
             do
@@ -449,7 +461,7 @@ namespace Semantica
         {
             char quitar = '"';
             String cadena = "";
-            int condicion  = 0;
+            int condicion = 0;
             match("Console");
             match(".");
             if (Contenido == "WriteLine")
@@ -468,10 +480,10 @@ namespace Semantica
                 {
                     cadena = Contenido;
                     cadena = cadena.Replace(quitar.ToString(), "");
-                    if(condicion == 1)
-                    Console.WriteLine(cadena);
+                    if (condicion == 1)
+                        Console.WriteLine(cadena);
                     else
-                    Console.Write(cadena);
+                        Console.Write(cadena);
                 }
                 match(Tipos.Cadena);
                 if (Contenido == "+")
@@ -569,9 +581,9 @@ namespace Semantica
             }
             else if (Clasificacion == Tipos.Identificador)
             {
-                if(!ExisteVariable(Contenido))
+                if (!ExisteVariable(Contenido))
                 {
-                   throw new Error("Semantico: La variable " + Contenido + " no ha sido declarada. ", log, linea); 
+                    throw new Error("Semantico: La variable " + Contenido + " no ha sido declarada. ", log, linea);
                 }
                 var v = listaVariables.Find(delegate (Variable x) { return x.nombre == Contenido; });
                 S.Push(v.valor);
@@ -611,10 +623,6 @@ namespace Semantica
                     S.Push(valor);
                 }
             }
-        }
-        private bool ExisteVariable(string variableNombre)
-        {
-            return listaVariables.Exists(v => v.nombre == variableNombre);
         }
     }
 }

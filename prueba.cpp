@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 static void Main(string[] args)
 {
     char a;
+    int b;
     a=(char)(218);
-    Console.Write("Dame el valor de b: ");
-    a = 20;
     Console.WriteLine("Dame el valor de b: ");
+    b = Console.Read();
 }
