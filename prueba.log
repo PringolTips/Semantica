@@ -3,8 +3,6 @@ Autores:
 Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:01/10/2024 03:03:32 p. m.
+Fecha:01/10/2024 07:13:15 p. m.
 Analisis Sintactico
-a = 218
-a = 20
-Error: Sintaxis: se espera un: Identificador( } ) en la linea 13
+Error: Semantico: La variable a no ha sido declarada.  en la linea 8

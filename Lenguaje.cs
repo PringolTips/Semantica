@@ -174,7 +174,10 @@ namespace Semantica
         {
             string variable = Contenido;
             match(Tipos.Identificador);
-
+            if(!ExisteVariable(variable))
+            {
+                throw new Error("Semantico: La variable " + variable + " no ha sido declarada. ", log, linea);
+            }
             var v = listaVariables.Find(delegate (Variable x) { return x.nombre == variable; });
             float nuevoValor = v.valor;
 
@@ -566,6 +569,10 @@ namespace Semantica
             }
             else if (Clasificacion == Tipos.Identificador)
             {
+                if(!ExisteVariable(Contenido))
+                {
+                   throw new Error("Semantico: La variable " + Contenido + " no ha sido declarada. ", log, linea); 
+                }
                 var v = listaVariables.Find(delegate (Variable x) { return x.nombre == Contenido; });
                 S.Push(v.valor);
                 if (tipoDatoExpresion < v.tipo)
@@ -604,6 +611,10 @@ namespace Semantica
                     S.Push(valor);
                 }
             }
+        }
+        private bool ExisteVariable(string variableNombre)
+        {
+            return listaVariables.Exists(v => v.nombre == variableNombre);
         }
     }
 }
