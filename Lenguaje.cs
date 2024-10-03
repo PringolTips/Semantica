@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 /*
-    1. Usar find en lugar del for each *
-    2. Valiar que no existan varibles duplicadas 
+    1. Usar find en lugar del for each  *
+    2. Valiar que no existan varibles duplicadas *
     3. Validar que existan las variables en las expressions matematicas
        Asignacion *
     4. 1.5 + 1.5 = 3 <- float porque float + float = float *
@@ -15,11 +15,11 @@ using System.Xml.Serialization;
     6. Asignar una expresión matematica a la variable al momento de declararla
        verificando la semantica
     7. Emular el if  *
-    8. Validar que en el ReadLine se capturen solo numeros e implementar una exception
+    8. Validar que en el ReadLine se capturen solo numeros e implementar una exception *
     12.ListaConcatenacion 30, 40, 50, 12, 0
-    10. Quitar comillas y considerar el write
+    10. Quitar comillas y considerar el write *
     9. Desarrollar lista de contcatenacion
-    9. Emular el do
+    9. Emular el do *
     10. Emular el for  -- 15 puntos
     11. Emular el while -- 15 puntos
 */
@@ -203,9 +203,8 @@ namespace Semantica
                         match("Read");
                         if (ejecutar)
                         {
-                            v.valor = Console.Read();
+                            nuevoValor = Console.Read();
                         }
-                        // 8
                     }
                     else
                     {
@@ -498,12 +497,18 @@ namespace Semantica
         string listaConcatenacion()
         {
             match("+");
-            match(Tipos.Identificador); // Validar que exista la variable
+            if (!ExisteVariable(Contenido))
+            {
+                throw new Error("Semantico: la variable no existe: " + Contenido, log, linea);
+            }
+            var v = listaVariables.Find(variable => variable.nombre == Contenido);
+            string resultado = v.valor.ToString();
+            match(Tipos.Identificador);
             if (Contenido == "+")
             {
-                listaConcatenacion();
+                resultado += listaConcatenacion();
             }
-            return "";
+            return resultado;
         }
         //Main      -> static void Main(string[] args) BloqueInstrucciones 
         private void Main()
