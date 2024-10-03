@@ -6,20 +6,20 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 /*
-    1. Usar find en lugar del for each  *
-    2. Valiar que no existan varibles duplicadas *
+    1. Usar find en lugar del for each                                                  Listo
+    2. Valiar que no existan varibles duplicadas                                        Listo
     3. Validar que existan las variables en las expressions matematicas
        Asignacion *
-    4. 1.5 + 1.5 = 3 <- float porque float + float = float *
+    4. 1.5 + 1.5 = 3 <- float porque float + float = float                              Listo
     5. Meter el valor de la variable al stack
     6. Asignar una expresión matematica a la variable al momento de declararla
        verificando la semantica
-    7. Emular el if  *
-    8. Validar que en el ReadLine se capturen solo numeros e implementar una exception *
+    7. Emular el if                                                                     Listo
+    8. Validar que en el ReadLine se capturen solo numeros e implementar una exception  Listo
     12.ListaConcatenacion 30, 40, 50, 12, 0
-    10. Quitar comillas y considerar el write *
+    10. Quitar comillas y considerar el write                                           Listo
     9. Desarrollar lista de contcatenacion
-    9. Emular el do *
+    9. Emular el do                                                                     Listo
     10. Emular el for  -- 15 puntos
     11. Emular el while -- 15 puntos
 */
@@ -142,6 +142,7 @@ namespace Semantica
             {
                 ListaInstrucciones(ejecutar);
             }
+            match("}");
 
         }
         //Instruccion -> Console | If | While | do | For | Variables | Asignacion
@@ -211,7 +212,7 @@ namespace Semantica
                         match("ReadLine");
                         if (!float.TryParse(Console.ReadLine(), out nuevoValor))
                         {
-                            throw new Error("Error de formato: solo se permiten números.", log, linea);
+                            throw new Error("Error Semantico: solo se permiten números.", log, linea);
                         }
                         else
                             v.valor = nuevoValor;
@@ -374,9 +375,12 @@ namespace Semantica
         //While -> while(Condicion) bloqueInstrucciones | instruccion
         private void While(bool ejecutar)
         {
+            int cTemp = caracter - 3;
+            int lTemp = linea;
+            bool resultado = false;
             match("while");
             match("(");
-            Condicion();
+            resultado = Condicion() && ejecutar;
             match(")");
             if (Contenido == "{")
             {
@@ -479,16 +483,37 @@ namespace Semantica
                 {
                     cadena = Contenido;
                     cadena = cadena.Replace(quitar.ToString(), "");
+                    match(Tipos.Cadena);
                     if (condicion == 1)
-                        Console.WriteLine(cadena);
+                    {
+                        if (Contenido == "+")
+                        {
+                            String temp = listaConcatenacion();
+                            Console.WriteLine(cadena + temp);
+                        }
+                        else
+                        {
+                            Console.WriteLine(cadena);
+                        }
+
+                    }
+
                     else
-                        Console.Write(cadena);
+                    {
+                        if (Contenido == "+")
+                        {
+                            String temp = listaConcatenacion();
+                            Console.Write(cadena + temp);
+                        }
+                        else
+                        {
+                            Console.Write(cadena);
+                        }
+
+                    }
+                        
                 }
-                match(Tipos.Cadena);
-                if (Contenido == "+")
-                {
-                    listaConcatenacion();
-                }
+
             }
             match(")");
             match(";");
