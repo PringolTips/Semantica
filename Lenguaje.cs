@@ -375,20 +375,49 @@ namespace Semantica
         //While -> while(Condicion) bloqueInstrucciones | instruccion
         private void While(bool ejecutar)
         {
-            int cTemp = caracter - 3;
+            int cTemp = caracter;
             int lTemp = linea;
             bool resultado = false;
             match("while");
             match("(");
-            resultado = Condicion() && ejecutar;
-            match(")");
-            if (Contenido == "{")
+            do
             {
-                BloqueInstrucciones(ejecutar);
-            }
-            else
+                // Reiniciamos la posición al inicio de la condición, no al "while"
+                archivo.DiscardBufferedData();
+                archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                caracter = cTemp;
+                linea = lTemp;
+                nextToken();
+                resultado = Condicion() && ejecutar;
+                if (resultado)
+                {
+                    match(")");
+                    if (Contenido == "{")
+                    {
+                        BloqueInstrucciones(ejecutar);
+                    }
+                    else
+                    {
+                        Instruccion(ejecutar);
+                    }
+                    // Guardamos la posición actual para la próxima iteración
+                    cTemp = caracter;
+                    lTemp = linea;
+                }
+            } while (resultado);
+
+            // Si no se ejecuta el bucle, consumimos los tokens restantes
+            if (!resultado)
             {
-                Instruccion(ejecutar);
+                match(")");
+                if (Contenido == "{")
+                {
+                    BloqueInstrucciones(false);
+                }
+                else
+                {
+                    Instruccion(false);
+                }
             }
         }
         //Do -> do 
@@ -511,7 +540,7 @@ namespace Semantica
                         }
 
                     }
-                        
+
                 }
 
             }

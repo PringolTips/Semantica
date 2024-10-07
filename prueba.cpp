@@ -8,6 +8,10 @@ static void Main(string[] args)
     char a;
     int b;
     a=(char)(218);
-    Console.WriteLine("A: "+a);
+    
+    while(a>1)
+    {
+        Console.WriteLine("A: "+a);
+    }
 
 }
