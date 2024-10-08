@@ -3,7 +3,9 @@ Autores:
 Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:07/10/2024 09:21:22 a. m.
+Fecha:07/10/2024 08:50:24 p. m.
 Analisis Sintactico
-a = 218
-Error: Sintaxis: se espera un: Identificador( } ) en la linea 15
+x = 0
+y = 10
+z = 2
+Error: Sintaxis: se espera un: ;( c ) en la linea 13

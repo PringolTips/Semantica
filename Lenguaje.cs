@@ -9,16 +9,16 @@ using System.Xml.Serialization;
     1. Usar find en lugar del for each                                                  Listo
     2. Valiar que no existan varibles duplicadas                                        Listo
     3. Validar que existan las variables en las expressions matematicas
-       Asignacion *
+       Asignacion                                                                       Listo
     4. 1.5 + 1.5 = 3 <- float porque float + float = float                              Listo
-    5. Meter el valor de la variable al stack
+    5. Meter el valor de la variable al stack                                           Listo
     6. Asignar una expresión matematica a la variable al momento de declararla
-       verificando la semantica
+       verificando la semantica                                                         Listo
     7. Emular el if                                                                     Listo
     8. Validar que en el ReadLine se capturen solo numeros e implementar una exception  Listo
-    12.ListaConcatenacion 30, 40, 50, 12, 0
+    12.ListaConcatenacion 30, 40, 50, 12, 0                                             Listo
     10. Quitar comillas y considerar el write                                           Listo
-    9. Desarrollar lista de contcatenacion
+    9. Desarrollar lista de concatenacion                                               Listo
     9. Emular el do                                                                     Listo
     10. Emular el for  -- 15 puntos
     11. Emular el while -- 15 puntos
@@ -116,8 +116,27 @@ namespace Semantica
             {
                 throw new Error("Semantico: la variable " + Contenido + " ya fue declarada", log, linea);
             }
+            //Variable variable = new Variable(Contenido, t);
             listaVariables.Add(new Variable(Contenido, t));
+            var variable = listaVariables.Find(delegate (Variable x) { return x.nombre == Contenido; });
             match(Tipos.Identificador);
+            if (Contenido == "=")
+            {
+                match("=");
+                Expresion();
+                float valor = S.Pop();
+
+                if (AnalisisSemantico(variable, valor))
+                {
+                    variable.valor = valor;
+                    S.Push(valor);
+                    log.WriteLine(variable.nombre + " = " + valor);
+                }
+                else
+                {
+                    throw new Error("Semantico, no puedo asignar un " + tipoDatoExpresion + " a un " + variable.tipo, log, linea);
+                }
+            }
             if (Contenido == ",")
             {
                 match(",");
@@ -142,8 +161,6 @@ namespace Semantica
             {
                 ListaInstrucciones(ejecutar);
             }
-            match("}");
-
         }
         //Instruccion -> Console | If | While | do | For | Variables | Asignacion
         private void Instruccion(bool ejecutar)
@@ -266,11 +283,14 @@ namespace Semantica
                 Expresion();
                 nuevoValor %= S.Pop();
             }
-            // match(";");
+            match(";");
             if (AnalisisSemantico(v, nuevoValor))
             {
                 if (ejecutar)
+                {
                     v.valor = nuevoValor;
+                    S.Push(nuevoValor);
+                }
             }
             else
             {
@@ -382,7 +402,6 @@ namespace Semantica
             match("(");
             do
             {
-                // Reiniciamos la posición al inicio de la condición, no al "while"
                 archivo.DiscardBufferedData();
                 archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
                 caracter = cTemp;
@@ -400,13 +419,10 @@ namespace Semantica
                     {
                         Instruccion(ejecutar);
                     }
-                    // Guardamos la posición actual para la próxima iteración
                     cTemp = caracter;
                     lTemp = linea;
                 }
             } while (resultado);
-
-            // Si no se ejecuta el bucle, consumimos los tokens restantes
             if (!resultado)
             {
                 match(")");
@@ -493,13 +509,13 @@ namespace Semantica
         {
             char quitar = '"';
             String cadena = "";
-            int condicion = 0;
+            bool condicion = true;
             match("Console");
             match(".");
             if (Contenido == "WriteLine")
             {
                 match("WriteLine");
-                condicion = 1;
+                condicion = true;
             }
             else
             {
@@ -513,7 +529,7 @@ namespace Semantica
                     cadena = Contenido;
                     cadena = cadena.Replace(quitar.ToString(), "");
                     match(Tipos.Cadena);
-                    if (condicion == 1)
+                    if (condicion)
                     {
                         if (Contenido == "+")
                         {
@@ -524,9 +540,7 @@ namespace Semantica
                         {
                             Console.WriteLine(cadena);
                         }
-
                     }
-
                     else
                     {
                         if (Contenido == "+")
@@ -538,11 +552,8 @@ namespace Semantica
                         {
                             Console.Write(cadena);
                         }
-
                     }
-
                 }
-
             }
             match(")");
             match(";");
@@ -550,14 +561,27 @@ namespace Semantica
 
         string listaConcatenacion()
         {
+            char quitar = '"';
+            String cadena = "";
+            string resultado = "";
             match("+");
-            if (!ExisteVariable(Contenido))
+            if (Clasificacion == Tipos.Identificador)
             {
-                throw new Error("Semantico: la variable no existe: " + Contenido, log, linea);
+                if (!ExisteVariable(Contenido))
+                {
+                    throw new Error("Semantico: la variable no existe: " + Contenido, log, linea);
+                }
+                var v = listaVariables.Find(variable => variable.nombre == Contenido);
+                resultado = v.valor.ToString();
+                match(Tipos.Identificador);
             }
-            var v = listaVariables.Find(variable => variable.nombre == Contenido);
-            string resultado = v.valor.ToString();
-            match(Tipos.Identificador);
+            if (Clasificacion == Tipos.Cadena)
+            {
+                cadena = Contenido;
+                cadena = cadena.Replace(quitar.ToString(), "");
+                resultado += cadena;
+                match(Tipos.Cadena);
+            }
             if (Contenido == "+")
             {
                 resultado += listaConcatenacion();
