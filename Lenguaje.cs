@@ -395,23 +395,18 @@ namespace Semantica
         //While -> while(Condicion) bloqueInstrucciones | instruccion
         private void While(bool ejecutar)
         {
-            int cTemp = caracter;
+            int cTemp = caracter - 6;
             int lTemp = linea;
             bool resultado = false;
             do
             {
+
                 match("while");
                 match("(");
                 resultado = Condicion() && ejecutar;
-                archivo.DiscardBufferedData();
-                archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
-                caracter = cTemp;
-                linea = lTemp;
-                nextToken();
-                Condicion();
+                match(")");
                 if (resultado)
                 {
-                    match(")");
                     if (Contenido == "{")
                     {
                         BloqueInstrucciones(ejecutar);
@@ -420,23 +415,29 @@ namespace Semantica
                     {
                         Instruccion(ejecutar);
                     }
-                    cTemp = caracter;
-                    lTemp = linea;
+                    caracter = cTemp;
+                    linea = lTemp;
+                    archivo.DiscardBufferedData();
+                    archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
+                    nextToken();
+                    
                 }
-            }
-            while (resultado);
-            if (!resultado)
-            {
-                match(")");
-                if (Contenido == "{")
+               /* if (!resultado)
                 {
-                    BloqueInstrucciones(false);
-                }
-                else
-                {
-                    Instruccion(false);
-                }
-            }
+                    if (Contenido == "{")
+                    {
+                        BloqueInstrucciones(false);
+                    }
+                    else
+                    {
+                        Instruccion(false);
+                    }
+
+                    
+                }*/
+
+            }while (resultado);
+            
         }
         //Do -> do 
         //        bloqueInstrucciones | intruccion 
@@ -556,6 +557,41 @@ namespace Semantica
                         }
                     }
                 }
+            }
+            else 
+            {
+                if (ejecutar)
+                {
+                    float resultado;
+                    var v = listaVariables.Find(variable => variable.nombre == Contenido);
+                    resultado = v.valor;
+                    match(Tipos.Identificador);
+                    if (condicion)
+                    {
+                        if (Contenido == "+")
+                        {
+                            String temp = listaConcatenacion();
+                            Console.WriteLine(resultado + temp);
+                        }
+                        else
+                        {
+                            Console.WriteLine(resultado);
+                        }
+                    }
+                    else
+                    {
+                        if (Contenido == "+")
+                        {
+                            String temp = listaConcatenacion();
+                            Console.Write(resultado + temp);
+                        }
+                        else
+                        {
+                            Console.Write(resultado);
+                        }
+                    }
+                }
+
             }
             match(")");
             match(";");
