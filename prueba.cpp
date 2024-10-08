@@ -9,19 +9,9 @@ static void Main(string[] args)
     char x=0, y=10, z=2;
     char c;
 
-    c = (100+200)
-    c = (char) (100+200);
-
-    Console.WriteLine("Valor de altura = ");
-    altura = Console.ReadLine();
-
-    x = (3 + altura) * 8 - (10 - 4) / 2; // = 61
-    x--;
-    x+=(altura*8);
-    x*=2;
-    x/=(y-6);
-    i = 0;
-
-    i = 0;
-
+    while(x<10)
+    {
+        x++;
+        Console.WriteLine(x);
+    }
 }

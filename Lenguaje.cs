@@ -283,7 +283,7 @@ namespace Semantica
                 Expresion();
                 nuevoValor %= S.Pop();
             }
-            match(";");
+            //match(";");
             if (AnalisisSemantico(v, nuevoValor))
             {
                 if (ejecutar)
@@ -398,16 +398,17 @@ namespace Semantica
             int cTemp = caracter;
             int lTemp = linea;
             bool resultado = false;
-            match("while");
-            match("(");
             do
             {
+                match("while");
+                match("(");
+                resultado = Condicion() && ejecutar;
                 archivo.DiscardBufferedData();
                 archivo.BaseStream.Seek(cTemp, SeekOrigin.Begin);
                 caracter = cTemp;
                 linea = lTemp;
                 nextToken();
-                resultado = Condicion() && ejecutar;
+                Condicion();
                 if (resultado)
                 {
                     match(")");
@@ -422,7 +423,8 @@ namespace Semantica
                     cTemp = caracter;
                     lTemp = linea;
                 }
-            } while (resultado);
+            }
+            while (resultado);
             if (!resultado)
             {
                 match(")");

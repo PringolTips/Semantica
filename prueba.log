@@ -3,9 +3,10 @@ Autores:
 Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:07/10/2024 08:50:24 p. m.
+Fecha:08/10/2024 12:42:42 a. m.
 Analisis Sintactico
 x = 0
 y = 10
 z = 2
-Error: Sintaxis: se espera un: ;( c ) en la linea 13
+x = 1
+Error: Sintaxis: se espera un: )( x ) en la linea 15
