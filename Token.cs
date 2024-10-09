@@ -15,14 +15,22 @@ namespace Semantica
             Condicion
             
         };
+        private string contenido;
+        private Tipos clasificacion;
         public Token()
         {
             Contenido = "";
         }
          public string Contenido
-        {get;set;}
+        {
+            get => contenido;
+            set => contenido = value;
+        }
         public Tipos Clasificacion
-        {get;set;}
+        {
+            get => clasificacion; 
+            set => clasificacion = value;
+        }
 
     }
 }

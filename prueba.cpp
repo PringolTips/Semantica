@@ -5,12 +5,24 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    int altura,i,j;
-    float y=10, z=2;
+    int altura, i, j = 1;
+    float y = 10, z = 2;
     char c;
-
-    // c = (100+200);
-    c = (char) (100+200);
+    if (j%2==0)
+                {Console.WriteLine("*");}
+    
+    // c = 100+200;
+    /*while (j < 10)
+       {
+           Console.Write(""+j);
+           j++;
+       }*/
+    for(j = 1; j<=5; j++)
+     {
+         Console.WriteLine("*");
+         
+     }
+    /*c = (char) (100+200);
 
     Console.Write("Valor de altura = ");
     altura = Console.ReadLine();
@@ -44,7 +56,7 @@ static void Main(string[] args)
     {
         j = 1;
         while (j<=i)
-        { 
+        {
             Console.Write(""+j);
             j++;
         }
@@ -57,5 +69,5 @@ static void Main(string[] args)
         i++;
     }
     while (i<altura*2);
-    Console.WriteLine("");
+    Console.WriteLine("");*/
 }
