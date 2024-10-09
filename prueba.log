@@ -3,10 +3,51 @@ Autores:
 Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:08/10/2024 12:42:42 a. m.
+Fecha:09/10/2024 07:57:54 a. m.
+using = Identificador
 Analisis Sintactico
-x = 0
+System = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Collections = Identificador
+. = Caracter
+Generic = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Linq = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Threading = Identificador
+. = Caracter
+Tasks = Identificador
+; = FinSentencia
+static = Identificador
+void = Identificador
+Main = Identificador
+( = Caracter
+string = Identificador
+[ = Caracter
+] = Caracter
+args = Identificador
+) = Caracter
+{ = Inicio
+int = TipoDato
+altura = Identificador
+, = Caracter
+i = Identificador
+, = Caracter
+j = Identificador
+; = FinSentencia
+float = TipoDato
+y = Identificador
+= = Asignacion
+10 = Numero
+, = Caracter
 y = 10
-z = 2
-x = 1
-Error: Sintaxis: se espera un: )( x ) en la linea 15
+Error: Sintaxis: se espera un ; : ,  en la linea 9

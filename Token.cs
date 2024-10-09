@@ -13,12 +13,13 @@ namespace Semantica
             OpLogico, OpRelacional, OpTernario, Asignacion, IncTermino,
             IncFactor, Cadena, Inicio, Fin, Caracter, TipoDato, Ciclo, 
             Condicion
+            
         };
         public Token()
         {
             Contenido = "";
         }
-        public string Contenido
+         public string Contenido
         {get;set;}
         public Tipos Clasificacion
         {get;set;}

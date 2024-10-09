@@ -5,36 +5,31 @@ using System.Threading.Tasks;
 
 namespace Semantica
 {
-    public class Sintaxis : Lexico
+    public class Sintaxis: Lexico
     {
-        public Sintaxis()
-        {
+        public Sintaxis(){
             nextToken();
         }
-        public Sintaxis(string nombre) : base(nombre)
-        {
+        public Sintaxis(string name) : base(name){
             nextToken();
         }
-        public void match(string espera)
-        {
-            if (Contenido == espera)
-            {
+        public void match(String espera){
+            if(Contenido == espera){
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un: " + espera + "( " + Contenido + " )", log, linea);
+                throw new Error("Sintaxis: se espera un "+ espera + " : " + Contenido + " ",log,linea);
             }
         }
-        public void match(Tipos espera)
-        {
-            if (Clasificacion == espera)
-            {
+
+        public void match(Tipos espera){
+            if(Clasificacion == espera){ 
                 nextToken();
             }
             else
             {
-                throw new Error("Sintaxis: se espera un: " + espera + "( " + Contenido + " )",log, linea);
+                throw new Error("Sintaxis: se espera un "+ espera + " : " + Contenido + " " , log, linea);
             }
         }
     }

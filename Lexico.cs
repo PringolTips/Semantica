@@ -56,7 +56,6 @@ namespace Semantica
             linea = caracter = 1;
             log = new StreamWriter(Path.GetFileNameWithoutExtension(nombre) + ".log");
             log.AutoFlush = true;
-            this.linea = 1;
             log.WriteLine("Analizador Lexico");
             log.WriteLine("Autores: \nVega Angeles Christopher");
             log.WriteLine("Moya Arreola Cristian");
@@ -85,7 +84,7 @@ namespace Semantica
             }
             else if (c == '\n')
             {
-                linea++;
+                //linea++;
                 return 23;
             }
             else if (char.IsWhiteSpace(c))
@@ -172,10 +171,6 @@ namespace Semantica
             {
                 return 20;
             }
-            else if (c == '$')
-            {
-                return 24;
-            }
             else
             {
                 return 22;
@@ -231,6 +226,10 @@ namespace Semantica
                     {
                         buffer += c;
                     }
+                    if (c == '\n')
+                    {
+                        linea++;
+                    }
                     caracter++;
                     archivo.Read();
                 }
@@ -269,7 +268,7 @@ namespace Semantica
 
             }
             Contenido = buffer;
-            //log.WriteLine(Contenido + " = " + Clasificacion);
+            log.WriteLine(Contenido + " = " + Clasificacion);
         }
         public bool finArchivo()
         {

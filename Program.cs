@@ -13,13 +13,16 @@ namespace Semantica
             {
                 using (Lenguaje L = new Lenguaje())
                 {
-                    L.Program();                        
+                    L.Programa();
                 }
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+
         }
     }
+    
 }
