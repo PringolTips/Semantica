@@ -5,69 +5,9 @@ using System.Threading.Tasks;
 
 static void Main(string[] args)
 {
-    int altura, i, j = 1;
-    float y = 10, z = 2;
-    char c;
-    if (j%2==0)
-                {Console.WriteLine("*");}
-    
-    // c = 100+200;
-    /*while (j < 10)
-       {
-           Console.Write(""+j);
-           j++;
-       }*/
-    for(j = 1; j<=5; j++)
-     {
-         Console.WriteLine("*");
-         
-     }
-    /*c = (char) (100+200);
-
-    Console.Write("Valor de altura = ");
-    altura = Console.ReadLine();
-
-    float x = (3 + altura) * 8 - (10 - 4) / 2; // = 61
-    x--;
-    x+=(altura*8);
-    x*=2;
-    // x/=(y-6);
-    int k=1;
-    for (i = 1; k<=altura; k++) // mandar false y pedir de retorno el valor de la asignacion
+    int i;
+    for(i = 0; i < 10; i++)
     {
-        for (j = 1; j<=k; j++)
-        {
-            if (j%2==0)
-                {Console.Write("*");}
-            else
-                {Console.Write("-");}
-        }
-        Console.WriteLine("");
+        Console.WriteLine("i = " + i);
     }
-    i = 0;
-    do
-    {
-        Console.Write("-");
-        i++;
-    }
-    while (i<altura*2);
-    Console.WriteLine("");
-    for (i = 1; i<=altura; i++)
-    {
-        j = 1;
-        while (j<=i)
-        {
-            Console.Write(""+j);
-            j++;
-        }
-        Console.WriteLine("");
-    }
-    i = 0;
-    do
-    {
-        Console.Write("-");
-        i++;
-    }
-    while (i<altura*2);
-    Console.WriteLine("");*/
 }

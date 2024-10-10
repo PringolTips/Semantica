@@ -3,9 +3,73 @@ Autores:
 Vega Angeles Christopher
 Moya Arreola Cristian
 Martinez Prieto Angel Josue
-Fecha:09/10/2024 09:44:13 a. m.
+Fecha:10/10/2024 01:32:02 a. m.
+using = Identificador
 Analisis Sintactico
-j = 1
-y = 10
-z = 2
-Error: Sintaxis: se espera un ) : "*"  en la linea 12
+System = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Collections = Identificador
+. = Caracter
+Generic = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Linq = Identificador
+; = FinSentencia
+using = Identificador
+System = Identificador
+. = Caracter
+Threading = Identificador
+. = Caracter
+Tasks = Identificador
+; = FinSentencia
+static = Identificador
+void = Identificador
+Main = Identificador
+( = Caracter
+string = Identificador
+[ = Caracter
+] = Caracter
+args = Identificador
+) = Caracter
+{ = Inicio
+int = TipoDato
+i = Identificador
+; = FinSentencia
+for = Ciclo
+( = Caracter
+i = Identificador
+= = Asignacion
+0 = Numero
+; = FinSentencia
+i = Identificador
+< = OpRelacional
+10 = Numero
+; = FinSentencia
+i = Identificador
+++ = IncTermino
+) = Caracter
+{ = Inicio
+Console = Identificador
+. = Caracter
+WriteLine = Identificador
+( = Caracter
+"i = " = Cadena
++ = OpTermino
+i = Identificador
+) = Caracter
+; = FinSentencia
+} = Fin
+} = Fin
+i = Identificador
+< = OpRelacional
+10 = Numero
+; = FinSentencia
+i = Identificador
+++ = IncTermino
+) = Caracter
+Error: Sintaxis: se espera un ; : )  en la linea 9

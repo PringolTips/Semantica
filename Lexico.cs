@@ -268,7 +268,7 @@ namespace Semantica
 
             }
             Contenido = buffer;
-            //log.WriteLine(Contenido + " = " + Clasificacion);
+            log.WriteLine(Contenido + " = " + Clasificacion);
         }
         public bool finArchivo()
         {

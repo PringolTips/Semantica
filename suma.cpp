@@ -9,8 +9,8 @@ static void Main(string[] args)
     char x=0, y=10, z=2;
     char c;
 
-    c = (100+200);
-    c = (char) (100+200);
+    //c = (100+200);
+   // c = (char) (100+200);
 
     Console.WriteLine("Valor de altura = ");
     altura = Console.ReadLine();
